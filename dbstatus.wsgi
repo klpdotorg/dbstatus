@@ -116,7 +116,7 @@ class getstatus:
       for row in result:
         self.currentprograms.append(row[0])
 
-      cursor.execute("select to_char(self.updatedtime,'yyyy-mm-dd HH24:MI:SS') from tb_statusinfo")
+      cursor.execute("select to_char(updatedtime,'yyyy-mm-dd HH24:MI:SS') from tb_statusinfo")
       result=cursor.fetchall()
       for row in result:
        self.updatedtime=row[0]

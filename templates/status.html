@@ -1,0 +1,84 @@
+$def with (statusinfo)
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Karnataka Learning Partnership - Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/css/status.css"/>
+    <link rel="stylesheet" type="text/css" href="/yui/build/fonts/fonts-min.css" />
+    <link rel="stylesheet" type="text/css" href="/yui/build/treeview/assets/skins/sam/treeview.css" />
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons
+    <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+
+  -->
+  </head>
+
+<body class="yui-skin-sam" onload="createTree($statusinfo)">
+
+<!-- header -->
+
+<div class="container">
+  <div id="masthead">
+      <hgroup id="header">
+        <h1>Karnataka Learning Partnership</h1>
+        <h3>Numbers from the database</h3>
+        <h4>Last update on $statusinfo["updatedtime"]</h4>
+      </hgroup>
+    </div>
+  </div>
+
+<div class="container">
+<div class="span5">
+<div id="rootnode"></div>
+</div>
+<div class="span6">
+<div id="load_data">
+</div>
+</div>
+</div> <!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="css/jquery.js"></script>
+    <script src="css/bootstrap-transition.js"></script>
+    <script src="css/bootstrap-alert.js"></script>
+    <script src="css/bootstrap-modal.js"></script>
+    <script src="css/bootstrap-dropdown.js"></script>
+    <script src="css/bootstrap-scrollspy.js"></script>
+    <script src="css/bootstrap-tab.js"></script>
+    <script src="css/bootstrap-tooltip.js"></script>
+    <script src="css/bootstrap-popover.js"></script>
+    <script src="css/bootstrap-button.js"></script>
+    <script src="css/bootstrap-collapse.js"></script>
+    <script src="css/bootstrap-carousel.js"></script>
+    <script src="css/bootstrap-typeahead.js"></script>
+  <script type="text/javascript" src="/yui3/build/yui/yui-min.js"></script>
+<script type="text/javascript" src="/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/yui/build/treeview/treeview-min.js"></script>
+<script type="text/javascript" src="/js/createtree.js"></script>
+
+  
+<div class="footer">
+  <div class="container">
+<center><h5>&copy; 2012 Karnataka Learning Partnership</h5></center></div>
+</div>
+
+</body></html>

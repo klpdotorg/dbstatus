@@ -21,9 +21,9 @@ function treeInit()
 {
   //instantiate the tree:
   tree = new YAHOO.widget.TreeView("rootnode");
-  var schoolNode =new YAHOO.widget.TextNode("schoolcount",tree.getRoot(),false);
-  var preschoolNode=new YAHOO.widget.TextNode("preschoolcount",tree.getRoot(),false);
-  var currentProgramsNode=new YAHOO.widget.TextNode("currentprograms",tree.getRoot(),false);
+  var schoolNode =new YAHOO.widget.TextNode("Schools",tree.getRoot(),false);
+  var preschoolNode=new YAHOO.widget.TextNode("Preschools",tree.getRoot(),false);
+  var currentProgramsNode=new YAHOO.widget.TextNode("Current Programs",tree.getRoot(),false);
   
   createChildNodes(schoolNode,schooldistrictkeys);
   createChildNodes(preschoolNode,preschooldistrictkeys);
@@ -178,7 +178,7 @@ function getdata(node)
     else
       showBoundaryData(content,data,depth); 
   }
-  else if(depth==2)
+  else if(degetChildDatapth==2)
   {
     //block
     root=node["parent"]["parent"]["label"];
@@ -465,7 +465,6 @@ function createTree(statusinfo)
   preschoolcount=statusinfo["preschoolcount"];
   preschooldistrictkeys=keys(statusinfo["preschoolcount"]["children"]).sort();
   currentprograms=statusinfo["currentprograms"];
-  document.getElementById("heading").innerHTML="<h1>Akshara DB Counts </h1>   (Last updated at:"+statusinfo["updatedtime"]+")<br>";
   loadinitialContent();
 
   YAHOO.util.Event.onDOMReady(treeInit);

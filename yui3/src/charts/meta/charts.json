@@ -1,5 +1,0 @@
-{
-    "charts": {
-        "requires":["dom", "datatype-number", "datatype-date", "event-custom", "event-mouseenter", "widget", "widget-position", "widget-stack", "graphics"]
-    }
-}

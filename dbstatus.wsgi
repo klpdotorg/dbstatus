@@ -132,7 +132,7 @@ class getstatus:
 
 
     statusinfo={"schoolcount":self.schoolcount,"preschoolcount":self.preschoolcount,"currentprograms":self.currentprograms,"updatedtime":self.updatedtime}
-    print statusinfo
+    #print statusinfo
 
     web.header('Content-Type','text/html; charset=utf-8')
     return render_plain.status(statusinfo)

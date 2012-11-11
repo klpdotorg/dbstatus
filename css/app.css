@@ -1,0 +1,33 @@
+#masthead {
+	background: url("images/logo.png") no-repeat;
+	height: 200px;
+	padding: 2.5em 0 0 15.5em;
+}
+
+body {
+	background: url("images/bg.png");
+}
+.header {
+padding-top:10em;
+}
+
+.footer {
+	border-top: 1.5px solid #E5E5E5;
+	padding: 70px 0;
+	margin-top: 70px;
+}
+
+.buttons.well{
+	background-color: #666;
+	opacity: 0.6;
+}
+
+.label {
+	font-size: 15px;
+	line-height: 25px;
+}
+.label:hover {background-color: #666;}
+
+body {
+	margin-top: 20px;
+}

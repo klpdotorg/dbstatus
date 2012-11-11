@@ -134,13 +134,13 @@ function getdata(node)
 {
   if(node["label"]=="currentprograms")
   {
-    var content="<div class='div-table'><div class='div-table-caption' >Current Programs</div>";
+    var content="<table class='table'><caption >Current Programs</caption>";
     for(num in currentprograms)
     {
       program=currentprograms[num];
-      content=content+"<div class='div-table-row'><div class='div-table-col'  style='width:220px'>"+program+"</div></div>";
+      content=content+"<tr><td>"+program+"</td></tr>";
     }
-    content=content+"</div>"
+    content=content+"</table>"
     document.getElementById("load_data").innerHTML=content;
     return;
   }
@@ -327,11 +327,11 @@ function getChildData(type,id,node,content,data,depth)
 
 function showBoundaryData(incontent,data,depth)
 {
-    var content=incontent+"<div class='div-table'><div class='div-table-caption' >Counts</div><div class='div-table-row'><div class='div-table-col' style='width:200px'>Active School Count</div><div class='div-table-col' style='width:200px'>"+data["scount"]+"</div></div><div class='div-table-row'><div class='div-table-col' style='width:200px'>Active School with Students Count</div><div class='div-table-col' style='width:200px'>"+data["sstucount"]+"</div></div><div class='div-table-row'><div class='div-table-col' style='width:200px'>Active Students Count</div><div class='div-table-col' style='width:200px'>"+data["stucount"]+"</div></div></div>";
+    var content=incontent+"<table class='table'><caption>Counts</caption><tr><td>Active School Count</td><td>"+data["scount"]+"</td></tr><tr><td>Active School with Students Count</td><td>"+data["sstucount"]+"</td></tr><tr><td>Active Students Count</td><td>"+data["stucount"]+"</td></tr></table>";
     content=content+"<br><br>";
     if( depth !==3 )
     {
-      content=content+"<div class='div-table'><div class='div-table-caption'>Assessment Counts</div><div  class='div-table-row'><div class='div-table-col'>Boundary</div><div class='div-table-col'>Program Name</div><div class='div-table-col'>Assess Name</div><div class='div-table-col'>Schools Mapped</div><div class='div-table-col'>Schools Assessed</div><div class='div-table-col'>Student Assessed</div></div>";
+      content=content+"<table class='table'><caption>Assessment Counts</caption><tr><td>Boundary</td><td>Program Name</td><td>Assess Name</td><td>Schools Mapped</td><td>Schools Assessed</td><td>Student Assessed</td></tr>";
       var asscount=0;
       var bkeys=keys(data["assessmentcount"]).sort();
       for (bkey in bkeys)
@@ -346,18 +346,18 @@ function showBoundaryData(incontent,data,depth)
           {
              var assname=asskeys[akey];
              asscount=asscount+1;
-             content=content+"<div class='div-table-row'><div class='div-table-col'>"+bname+"</div><div class='div-table-col'>"+pname+"</div><div class='div-table-col'>"+assname+"</div><div class='div-table-col'>"+data["assessmentcount"][bname][pname][assname]["smappedcount"]+"</div><div class='div-table-col'>"+data["assessmentcount"][bname][pname][assname]["sassessedcount"]+"</div><div class='div-table-col'>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</div></div>";
+             content=content+"<tr><td>"+bname+"</td><td>"+pname+"</td><td>"+assname+"</td><td>"+data["assessmentcount"][bname][pname][assname]["smappedcount"]+"</td><td>"+data["assessmentcount"][bname][pname][assname]["sassessedcount"]+"</td><td>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</td></tr>";
           }
         }  
       }  
       if(asscount==0)
       {
-        content=content+"<div  class='div-table-row'><div class='div-table-col'>-</div><div class='div-table-col'>-</div><div class='div-table-col'>-</div><div class='div-table-col'>-</div><div class='div-table-col'>-</div><div class='div-table-col'>-</div></div>";
+        content=content+"<tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
       }
     }
     else
     {
-      content=content+"<div class='div-table'><div class='div-table-caption'>Assessment Counts</div><div  class='div-table-row'><div class='div-table-col' style='width:100px'>Boundary</div><div class='div-table-col' style='width:100px'>Program Name</div><div class='div-table-col' style='width:100px'>Assessment Name</div><div class='div-table-col' style='width:100px'>Student Assessed</div></div>";
+      content=content+"<table class='table'><caption>Assessment Counts</caption><tr><td>Boundary</td><td>Program Name</td><td>Assessment Name</td><td>Student Assessed</td></tr>";
       var asscount=0;
       var bkeys=keys(data["assessmentcount"]).sort();
       for (bkey in bkeys)
@@ -372,17 +372,17 @@ function showBoundaryData(incontent,data,depth)
           {
              var assname=asskeys[akey];
              asscount=asscount+1;
-             content=content+"<div class='div-table-row'><div class='div-table-col' style='width:100px'>"+bname+"</div><div class='div-table-col' style='width:100px'>"+pname+"</div><div class='div-table-col' style='width:100px'>"+assname+"</div><div class='div-table-col' style='width:100px'>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</div></div>";
+             content=content+"<tr><td>"+bname+"</td><td>"+pname+"</td><td>"+assname+"</td><td>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</td></tr>";
           }
         }  
       }  
       if(asscount==0)
       {
-        content=content+"<div  class='div-table-row'><div class='div-table-col' style='width:100px' >-</div><div class='div-table-col' style='width:100px'>-</div><div class='div-table-col' style='width:100px'>-</div><div class='div-table-col' style='width:100px'>-</div></div>";
+        content=content+"<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
       }
     
     }
-    content=content+"</div>";
+    content=content+"</table>";
       
     document.getElementById("load_data").innerHTML=content;
 }
@@ -390,9 +390,9 @@ function showBoundaryData(incontent,data,depth)
 
 function showSchoolData(incontent,data)
 {
-  var content=incontent+"<div class='div-table'><div class='div-table-caption' >Counts</div><div class='div-table-row'><div class='div-table-col' style='width:200px'>Active Students Count</div><div class='div-table-col' style='width:200px'>"+data["stucount"]+"</div></div></div>";
+  var content=incontent+"<table class='table'><caption>Counts</caption><tr><td>Active Students Count</td><td>"+data["stucount"]+"</td></tr></table>";
     content=content+"<br><br>";
-    content=content+"<div class='div-table'><div class='div-table-caption'>Assessment Counts</div><div  class='div-table-row'><div class='div-table-col' style='width:100px'>Program Name</div><div class='div-table-col' style='width:100px'>Assessment Name</div><div class='div-table-col' style='width:100px'>Student Assessed</div></div>";
+    content=content+"<table class='table'><caption>Assessment Counts</caption><tr><td>Program Name</td><td>Assessment Name</td><td>Student Assessed</td></tr>";
     var asscount=0;
     var bkeys=keys(data["assessmentcount"]).sort();
     for (bkey in bkeys)
@@ -407,15 +407,15 @@ function showSchoolData(incontent,data)
         {
            var assname=asskeys[akey];
            asscount=asscount+1;
-           content=content+"<div class='div-table-row'><div class='div-table-col' style='width:100px' >"+pname+"</div><div class='div-table-col'  style='width:100px'>"+assname+"</div><div class='div-table-col' style='width:100px'>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</div></div>";
+           content=content+"<tr><td>"+pname+"</td><td>"+assname+"</td><td>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</td></tr>";
         }
       }
     }
     if(asscount==0)
     {
-      content=content+"<div  class='div-table-row'><div class='div-table-col' style='width:100px'>-</div><div class='div-table-col' style='width:100px'>-</div><div class='div-table-col' style='width:100px'>-</div></div>";
+      content=content+"<tr><td>-</td><td>-</td><td>-</td></tr>";
     }
-    content=content+"</div>";
+    content=content+"</table>";
     document.getElementById("load_data").innerHTML=content;
 }
  
@@ -465,7 +465,6 @@ function createTree(statusinfo)
   preschoolcount=statusinfo["preschoolcount"];
   preschooldistrictkeys=keys(statusinfo["preschoolcount"]["children"]).sort();
   currentprograms=statusinfo["currentprograms"];
-  document.getElementById("heading").innerHTML="<h1>Akshara DB Counts </h1>   (Last updated at:"+statusinfo["updatedtime"]+")<br>";
   loadinitialContent();
 
   YAHOO.util.Event.onDOMReady(treeInit);

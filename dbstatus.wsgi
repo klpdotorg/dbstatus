@@ -5,6 +5,7 @@ import jsonpickle
 import csv
 import re
 from web import form
+from dateutil import parser as dateparser
 
 
 # Needed to find the templates
@@ -119,7 +120,8 @@ class getstatus:
       cursor.execute("select to_char(updatedtime,'yyyy-mm-dd HH24:MI:SS') from tb_statusinfo")
       result=cursor.fetchall()
       for row in result:
-       self.updatedtime=row[0]
+        date = dateparser.parse(row[0])
+        self.updatedtime=date.strftime('%d %h %Y')
 
       DbManager.getMainCon().commit()
       cursor.close()
@@ -130,10 +132,10 @@ class getstatus:
 
 
     statusinfo={"schoolcount":self.schoolcount,"preschoolcount":self.preschoolcount,"currentprograms":self.currentprograms,"updatedtime":self.updatedtime}
-    print statusinfo
+    #print statusinfo
 
     web.header('Content-Type','text/html; charset=utf-8')
-    return render_plain.dbstatus(statusinfo)
+    return render_plain.status(statusinfo)
 
 
 class getData:

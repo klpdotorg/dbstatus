@@ -9,6 +9,27 @@ user=username
 passwd=password
 
 
+A sslc_dataagg db has to be set up with the following table:-
+         Table "public.tb_sslc_sch_agg"
+     Column     |         Type         | Modifiers 
+----------------+----------------------+-----------
+ dist_code      | character varying(3) | 
+ ayid           | integer              | 
+ is_govt        | character varying(3) | 
+ moi            | character varying(3) | 
+ sch_count      | integer              | 
+ tot_stu_count  | integer              | 
+ pass_stu_count | integer              | 
+
+         Table "public.tb_district"
+  Column   |         Type          | Modifiers 
+-----------+-----------------------+-----------
+ dist_code | character varying(3)  | 
+ dist_name | character varying(32) | 
+
+
+
+
 Also set the cron entry as:-
 30 06 * * * completedirectorypath/dbstatus.sh 1>completedirectorypath/redirectedoutputfile 2>completedirectorypath/redirectederrorfile
 

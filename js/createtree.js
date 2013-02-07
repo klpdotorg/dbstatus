@@ -2,6 +2,7 @@
 var tree;
 var schoolcount={};
 var preschoolcount={};
+var sslccount={};
 var currentprograms={}
 var schooldistrictkeys=[];
 var preschooldistrictkeys=[];
@@ -21,12 +22,14 @@ function treeInit()
 {
   //instantiate the tree:
   tree = new YAHOO.widget.TreeView("rootnode");
-  var schoolNode =new YAHOO.widget.TextNode("schoolcount",tree.getRoot(),false);
   var preschoolNode=new YAHOO.widget.TextNode("preschoolcount",tree.getRoot(),false);
+  var schoolNode =new YAHOO.widget.TextNode("schoolcount",tree.getRoot(),false);
+  var sslcNode=new YAHOO.widget.TextNode("sslccount",tree.getRoot(),false);
   var currentProgramsNode=new YAHOO.widget.TextNode("currentprograms",tree.getRoot(),false);
   
-  createChildNodes(schoolNode,schooldistrictkeys);
   createChildNodes(preschoolNode,preschooldistrictkeys);
+  createChildNodes(schoolNode,schooldistrictkeys);
+  createChildNodes(sslcNode,sslcdistrictkeys);
   
    // Expand and collapse happen prior to the actual expand/collapse,
    // and can be used to cancel the operation
@@ -152,12 +155,24 @@ function getdata(node)
     root=node["label"];
     var data;
     if(root=="schoolcount")
+    {
       data=schoolcount;
-    else
+      var content="";
+      showBoundaryData(content,data,depth);
+    }
+    else if(root=="preschoolcount")
+    {
       data=preschoolcount;
+      var content="";
+      showBoundaryData(content,data,depth);
+    }
+    else if(root="sslccount")
+    {
+      data=sslccount;
+      var content="";
+      showSSLCData(content,data,depth);
+    }
 
-    var content="";
-    showBoundaryData(content,data,depth);
   }
   else if(depth==1)
   {
@@ -165,18 +180,36 @@ function getdata(node)
     root=node["parent"]["label"];
     var data;
     if(root=="schoolcount")
-      data=schoolcount["children"][node["label"]]
-    else
-      data=preschoolcount["children"][node["label"]]
-
-    var content="<div><p>"+data["name"]+" ("+data["id"]+")</p></div>";
-    if( isEmpty(data["children"]))
     {
-      getChildData("block",data["id"],node,content,data,depth);
-      document.getElementById("load_data").innerHTML="Loading...";
+      data=schoolcount["children"][node["label"]]
+      var content="<div><p>"+data["name"]+" ("+data["id"]+")</p></div>";
+      if( isEmpty(data["children"]))
+      {
+        getChildData("block",data["id"],node,content,data,depth);
+        document.getElementById("load_data").innerHTML="Loading...";
+      }
+      else
+        showBoundaryData(content,data,depth); 
     }
-    else
-      showBoundaryData(content,data,depth); 
+    else if(root=="preschoolcount")
+    {
+      data=preschoolcount["children"][node["label"]]
+      var content="<div><p>"+data["name"]+" ("+data["id"]+")</p></div>";
+      if( isEmpty(data["children"]))
+      {
+        getChildData("block",data["id"],node,content,data,depth);
+        document.getElementById("load_data").innerHTML="Loading...";
+      }
+      else
+        showBoundaryData(content,data,depth); 
+    }
+    else if(root="sslccount")
+    {
+      data=sslccount["children"][node["label"]];
+      var content="<div><p>"+data["name"]+"</p></div>";
+      showSSLCData(content,data,depth);
+    }
+
   }
   else if(depth==2)
   {
@@ -387,6 +420,12 @@ function showBoundaryData(incontent,data,depth)
     document.getElementById("load_data").innerHTML=content;
 }
 
+function showSSLCData(incontent,data,depth)
+{
+    var content=incontent+"<table class='table'><caption>Counts</caption><tr><td>Secondary School Count</td><td>"+data["scount"]+"</td></tr><tr><td>Total Number of Students who appeared for SSLC</td><td>"+data["stucount"]+"</td></tr></table>";
+    content=content+"<br><br>";
+    document.getElementById("load_data").innerHTML=content;
+}
 
 function showSchoolData(incontent,data)
 {
@@ -449,13 +488,17 @@ function keys(obj)
 
 function loadinitialContent()
 {
-    var content="<h2>School Counts</h2>";
+    var content="<h2>Preschool Counts</h2>";
+    data=preschoolcount;
+    showBoundaryData(content,data,0);
+    content=document.getElementById("load_data").innerHTML;
+    content= content+"<br><br><h2>School Counts</h2>";
     data=schoolcount;
     showBoundaryData(content,data,0);
     content=document.getElementById("load_data").innerHTML;
-    content= content+"<br><br><h2>Preschool Counts</h2>";
-    data=preschoolcount;
-    showBoundaryData(content,data,0);
+    content= content+"<br><br><h2>SSLC Counts</h2>";
+    data=sslccount;
+    showSSLCData(content,data,0);
 }
 
 function createTree(statusinfo)
@@ -464,6 +507,8 @@ function createTree(statusinfo)
   schooldistrictkeys=keys(statusinfo["schoolcount"]["children"]).sort();
   preschoolcount=statusinfo["preschoolcount"];
   preschooldistrictkeys=keys(statusinfo["preschoolcount"]["children"]).sort();
+  sslccount=statusinfo["sslccount"];
+  sslcdistrictkeys=keys(statusinfo["sslccount"]["children"]).sort();
   currentprograms=statusinfo["currentprograms"];
   loadinitialContent();
 

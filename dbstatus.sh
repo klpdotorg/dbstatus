@@ -19,14 +19,14 @@ DBNAME=$(basename $0 .sh)
 OWNER=klp
 
 
-echo droped db
-sudo -u postgres dropdb ${DBNAME}
+#echo droped db
+#sudo -u postgres dropdb ${DBNAME}
 
-echo created db
-sudo -u postgres createdb -O ${OWNER} -E UTF8 ${DBNAME}
+#echo created db
+#sudo -u postgres createdb -O ${OWNER} -E UTF8 ${DBNAME}
 
-echo creating dblink
-sudo -u postgres psql -d ${DBNAME} -c "CREATE EXTENSION dblink"
+#echo creating dblink
+#sudo -u postgres psql -d ${DBNAME} -c "CREATE EXTENSION dblink"
 
 # Create schema
 echo creating schema

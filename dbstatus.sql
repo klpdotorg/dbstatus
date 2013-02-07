@@ -76,7 +76,7 @@ CREATE TABLE "tb_statusinfo"(
 
 
 CREATE OR REPLACE VIEW vw_boundary as
-       select * from dblink('host=localhost dbname=klp_master user=klp password=hghykut#$2', 'select * from schools_boundary')
+       select * from dblink('host=localhost dbname=klp_master user=klp password=password', 'select * from schools_boundary')
        as t1 (id integer,
               parent_id integer,
               name varchar(300),
@@ -85,7 +85,7 @@ CREATE OR REPLACE VIEW vw_boundary as
               active integer);
 
 CREATE OR REPLACE VIEW vw_school as
-       select * from dblink('host=localhost dbname=klp_master user=klp password=hghykut#$2', 'select id,boundary_id,name,cat_id from schools_institution')
+       select * from dblink('host=localhost dbname=klp_master user=klp password=password', 'select id,boundary_id,name,cat_id from schools_institution')
        as t1 (id integer,
               boundary_id integer,
               name varchar(300),
@@ -93,7 +93,7 @@ CREATE OR REPLACE VIEW vw_school as
 
 
 CREATE OR REPLACE VIEW vw_sslc_sch_agg as
-       select * from dblink('host=localhost dbname=sslc_dataagg user=klp password=azsxdcfv','select dist.dist_name,agg.ayid,agg.is_govt,agg.moi,agg.sch_count,agg.tot_stu_count,agg.pass_stu_count from tb_sslc_sch_agg agg,tb_district dist where agg.dist_code=dist.dist_code')
+       select * from dblink('host=localhost dbname=sslc_dataagg user=klp password=password','select dist.dist_name,agg.ayid,agg.is_govt,agg.moi,agg.sch_count,agg.tot_stu_count,agg.pass_stu_count from tb_sslc_sch_agg agg,tb_district dist where agg.dist_code=dist.dist_code')
        as t1 (district varchar(32),
               ayid integer,
               is_govt varchar(3),

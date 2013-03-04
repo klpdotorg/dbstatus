@@ -87,11 +87,11 @@ def sendMail(body,file=None):
 
 statements = {"district_boundarycounts":"select b.name as name,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b where bs.id=b.id and b.boundary_category_id=$id",
 "block_boundarycounts":"select b2.name as b2name,b1.name as name,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b1 ,vw_boundary b2 where bs.id=b1.id and b1.parent_id=b2.id and b2.id=$id",
-"cluster_boundarycounts":"select b2.name as b2name,b1.name as b1name,b.name as name,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b,vw_boundary b1 ,vw_boundary b2 where bs.id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and b1.id=$id",
+"cluster_boundarycounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b,vw_boundary b1 ,vw_boundary b2 where bs.id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and b1.id=$id",
                "schoolcounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,s.name as sname,sstu.id as id,sstu.studentcount as stucount,sass.progname as progname,sass.assessname as assessname,sass.student_assess_count as stuassessedcount from tb_schoolstudentcount sstu left outer join tb_schoolassessmentcount sass on (sstu.id=sass.id), vw_boundary b,vw_boundary b1, vw_boundary b2,vw_school s where sstu.id=s.id and s.boundary_id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and b.id=$id",
                "classcounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,s.name as sname,ARRAY_TO_STRING(ARRAY[cstu.class,cstu.section],' ') as name,cstu.id as id,cstu.studentcount as stucount,cass.progname as progname,cass.assessname as assessname,cass.student_assess_count as stuassessedcount from tb_classstudentcount cstu left outer join tb_classassessmentcount cass on (cstu.id=cass.id), vw_boundary b,vw_boundary b1,vw_boundary b2,vw_school s where cstu.sid=s.id and s.boundary_id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and s.id=$id",
             "currentprograms":"select * from tb_currentprograms order by progname",
-            "sslc_counts":"select district as district,sch_count as schcount,tot_stu_count stucount from vw_sslc_sch_agg",
+            "sslc_counts":"select distinct district as district,sum(sch_count) as schcount,sum(tot_stu_count) stucount from vw_sslc_sch_agg group by district",
 }
 render_plain = web.template.render('templates/')
 
@@ -162,12 +162,12 @@ class getstatus:
 
       result=db.query(statements["sslc_counts"])
       for row in result:
-        self.sslccount["scount"]=self.sslccount["scount"]+row["schcount"]
-        self.sslccount["stucount"]=self.sslccount["stucount"]+row["stucount"]
+        self.sslccount["scount"]=self.sslccount["scount"]+int(row["schcount"])
+        self.sslccount["stucount"]=self.sslccount["stucount"]+int(row["stucount"])
         self.sslccount["children"][str(row["district"])]={}
         self.sslccount["children"][str(row["district"])]["name"]=str(row["district"])
-        self.sslccount["children"][str(row["district"])]["scount"]=row["schcount"]
-        self.sslccount["children"][str(row["district"])]["stucount"]=row["stucount"]
+        self.sslccount["children"][str(row["district"])]["scount"]=int(row["schcount"])
+        self.sslccount["children"][str(row["district"])]["stucount"]=int(row["stucount"])
 
       result=db.query(statements["currentprograms"])
       for row in result:
@@ -181,10 +181,10 @@ class getstatus:
     except:
       traceback.print_exc(file=sys.stderr)
       sendMail("Got an error")
-      DbManager.closeConnection()
 
 
     statusinfo={"schoolcount":self.schoolcount,"preschoolcount":self.preschoolcount,"currentprograms":self.currentprograms,"updatedtime":self.updatedtime,"sslccount":self.sslccount}
+
 
     web.header('Content-Type','text/html; charset=utf-8')
     return render_plain.status(statusinfo)
@@ -228,7 +228,7 @@ class getData:
           district=str(row["b2name"])
           block=str(row["b1name"])
           cluster=str(row["bname"])
-          name=str(row["name"])
+          name=str(row["bname"])
           id=row["id"]
           scount=convertNone(row["scount"])
           sstucount=convertNone(row["sstucount"])
@@ -260,7 +260,7 @@ class getData:
           district=str(row["b2name"])
           block=str(row["b1name"])
           cluster=str(row["bname"])
-          name=str(row["name"])
+          name=str(row["sname"])
           id=row["id"]
           stucount=convertNone(row["stucount"])
           progname=str(row["progname"])

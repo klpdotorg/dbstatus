@@ -93,7 +93,7 @@ CREATE OR REPLACE VIEW vw_school as
 
 
 CREATE OR REPLACE VIEW vw_sslc_sch_agg as
-       select * from dblink('host=localhost dbname=sslc_dataagg user=klp password=password','select dist.dist_name,agg.ayid,agg.is_govt,agg.moi,agg.sch_count,agg.tot_stu_count,agg.pass_stu_count from tb_sslc_sch_agg agg,tb_district dist where agg.dist_code=dist.dist_code')
+       select * from dblink('host=localhost dbname=sslc_dataagg user=klp password=password','select dist.dist_name,agg.ayid,agg.is_govt,agg.moi,agg.sch_count,agg.tot_stu_count,agg.pass_stu_count from tb_sslc_sch_agg agg,tb_district dist where agg.dist_code=dist.dist_code and agg.ayid=102')
        as t1 (district varchar(32),
               ayid integer,
               is_govt varchar(3),

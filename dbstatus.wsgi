@@ -9,7 +9,7 @@ from dateutil import parser as dateparser
 import smtplib,email,email.encoders,email.mime.text,email.mime.base,mimetypes
 
 
-db=web.database(dbn='postgres',user='klp',pw='hghykut#$2',db='dbstatus')
+db=web.database(dbn='postgres',user='klp',pw='password',db='dbstatus')
 # Needed to find the templates
 import sys, os,traceback
 abspath = os.path.dirname(__file__)

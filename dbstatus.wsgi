@@ -75,13 +75,13 @@ def sendMail(body,file=None):
         fileMsg.add_header('Content-Disposition','attachment;filename='+file.lstrip(filedir))
         emailMsg.attach(fileMsg)
 
-    server = smtplib.SMTP(smtpserver,smtpport)
+    '''server = smtplib.SMTP(smtpserver,smtpport)
     server.ehlo()
     server.starttls()
     server.ehlo
     server.login(sender,senderpwd)
     server.sendmail(sender,to,emailMsg.as_string())
-    server.close()
+    server.close()'''
 
 
 

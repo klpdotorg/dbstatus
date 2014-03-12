@@ -1,59 +1,140 @@
 $def with (statusinfo)
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>Karnataka Learning Partnership - Status</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<html lang="en">
+<head>      <!-- META -->
+    <title>Status</title>
+    
+    <link rel="icon" href="/images/favicon.ico"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/app.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="/css/status.css"/>
-    <link rel="stylesheet" type="text/css" href="/yui/build/fonts/fonts-min.css" />
-    <link rel="stylesheet" type="text/css" href="/yui/build/treeview/assets/skins/sam/treeview.css" />
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <script type="text/javascript" src="/js/libs.combined.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/lib/iCheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript" src="/yui3/build/yui/yui-min.js"></script>
+    <!--script type="text/javascript" src="/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="/yui/build/treeview/treeview-min.js"></script-->
+    <script type="text/javascript" src="/js/status.js"></script>
 
-    <!-- Le fav and touch icons
-    <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+    <link type="text/css" rel="stylesheet" href="/js/lib/iCheck/skins/minimal/minimal.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="/css/style.css" media="all"/>
+    
+</head>
 
-  -->
-  </head>
+<body>
+<header class="main-header">
+    <div class="header-content">
+      <a href="/" class="header_mobile_logo"></a>
+      <a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
+      <nav class="top-nav" role="navigation">
+        <ul id="navigation">
+          <li class="home">
+            <a href="http://www.klp.org.in" title=""><h1>Karnataka Learning Partnership</h1></a>
+          </li>
+          <li class="school_map">
+            <a href="http://www.klp.org.in/map" title="">School Map</a>
+          </li>
+          <li class="programmes">
+            <a href="http://www.klp.org.in/text/reading" title="">Programmes</a>
+            <ul>
+              <li><a href="http://www.klp.org.in/text/reading" title=""><span></span>Reading</a></li>
+              <li><a href="http://www.klp.org.in/text/maths" title=""><span></span>Math</a></li>
+              <li><a href="http://www.klp.org.in/text/library" title=""><span></span>Library</a></li>
+              <li><a href="/text/preschool" title=""><span></span>Pre-School</a></li>
+            </ul>
+          </li>
+          <li class="volunteer"><a href="http://www.klp.org.in/text/volunteer" title="">Volunteer</a></li>
+          <li class="database">
+            <a href="http://www.klp.org.in/listFiles/2" title="">Data</a>
+            <ul>
+              <li><a href="/" target="_blank" title=""><span></span>Status</a></li>
+              <li><a href="http://www.klp.org.in/listFiles/2" target="_blank" title=""><span></span>Raw Data</a></li>
+              <li><a href="http://github.com/klpdotorg" target="_blank" title=""><span></span>Code</a></li>
+            </ul>
+          </li>
+          <li class="reports">
+            <a href="http://www.klp.org.in/text/reports" title="">Reports</a>
+            <ul>
+              <li><a href="http://reports.klp.org.in" target="_blank" title=""><span></span>KLP Reports</a></li>
+              <li><a href="http://sslc.klp.org.in" target="_blank" title=""><span></span>SSLC</a></li>
+              <li><a href="http://www.klp.org.in/text/reports" title=""><span></span>Other Reports</a></li>
+            </ul>
+          </li>
+          <li class="about">
+            <a href="http://www.klp.org.in/text/aboutus" title="">About</a>
+            <ul>
+              <li><a href="http://www.klp.org.in/text/aboutus" title=""><span></span>About</a></li>
+              <li><a href="http://www.klp.org.in/text/partners" title=""><span></span>Partners</a></li>
+              <li><a href="http://www.klp.org.in/text/disclaimer" title=""><span></span>Disclaimer</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="clr"></div>
+    </div>
+  </header>
 
-<body class="yui-skin-sam" onload="createTree($statusinfo)">
+   
+<body class="yui-skin-sam" onload="initialise($statusinfo)">
 
 <!-- header -->
 
-<div class="container">
-  <div id="masthead">
-      <hgroup id="header">
-        <h1>Karnataka Learning Partnership</h1>
-        <h3>Numbers from the database</h3>
-        <h4>Last update on $statusinfo["updatedtime"]</h4>
-      </hgroup>
-    </div>
-  </div>
 
-<div class="container">
-<div class="span5">
-<div id="rootnode"></div>
-</div>
-<div class="span6">
-<div id="load_data">
-</div>
-</div>
-</div> <!-- /container -->
+  <div class="page-status">
+    <div class="container">
+      <h1 class="bordered turquoise">Status</h1>
+
+      <p class="ta_c">
+        This data is collected and maintained by Karnataka Learning Partnership for providing people a holistic view of the public education profile of their respective regions.
+      </p>      
+    </div>
+    <section>
+      <div class="page-section-heading-with-menu">
+        <div class="container">
+          <div class="heading"><h2>Select a data type</h2></div>
+        </div>
+
+        <div class="sub-sections-list">
+          <ul>
+            <li class="active">
+              <a href="#" onClick="loadData('preschool')" title="">Pre-School</a>
+            </li>
+            <li>
+              <a href="#" onClick="loadData('school')" title="">School</a>
+            </li>
+            <li>
+              <a href="#" onClick="loadData('sslc')" title="">SSLC</a>
+            </li>
+            <li>
+              <a href="#" onClick="loadData('programmes')" title="">Current Programmes</a>
+            </li>
+          </ul>
+        </div>
+        <div class="options-wrapper">
+          <div class="option_item" id="district">
+          </div>
+          <div class="option_item" id="block">
+          </div>
+          <div class="option_item" id="cluster">
+          </div>
+          <div class="option_item" id="school">
+            <div>
+         
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<section class="ie-z-index-fix">
+
+      <div class="container">
+        <div id="load_data"></div>
+      </div>
+</section> <!-- /container -->
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -70,10 +151,6 @@ $def with (statusinfo)
     <script src="css/bootstrap-collapse.js"></script>
     <script src="css/bootstrap-carousel.js"></script>
     <script src="css/bootstrap-typeahead.js"></script>
-  <script type="text/javascript" src="/yui3/build/yui/yui-min.js"></script>
-<script type="text/javascript" src="/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="/yui/build/treeview/treeview-min.js"></script>
-<script type="text/javascript" src="/js/createtree.js"></script>
 
   
 <div class="footer">

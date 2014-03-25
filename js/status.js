@@ -8,21 +8,76 @@ var preschooldistrictkeys=[];
 
 function loadData(tab)
 {
-	var content=document.getElementById("load_data").innerHTML;
+  activateLink(tab);
 	if (tab == 'preschool') {
 		content="<h2>Preschool Counts</h2>";
-    	data=preschoolcount;
-    	showBasicData(tab,data);
+      data=preschoolcount;
+      content = showBasicData(tab,data);
     	showAssessmentData(content,data,0);
     } else if (tab == 'school') {
-    	content = "<br><br><h2>School Counts</h2>";
+      content = "<br><br><h2>School Counts</h2>";
     	data=schoolcount;
-    	showBasicData(tab,data);
+    	content = showBasicData(tab,data);
     	showAssessmentData(content,data,0);
     } else if (tab == 'sslc') {
-    	data=sslccount;
+      data=sslccount;
     	showBasicData(tab,data);
-    } 
+    } else if (tab == "programmes") {
+      showProgrammes();
+    }
+}
+
+function activateLink(tab)
+{
+  if (tab == 'preschool') {
+    populateSelection("district_select",preschooldistrictkeys);
+    document.getElementById("preschool").classList.add('active');
+    document.getElementById("school").classList.remove('active');
+    document.getElementById("sslc").classList.remove('active');
+    document.getElementById("programmes").classList.remove('active');
+  } else if (tab == 'school') {
+    populateSelection("district_select",schooldistrictkeys);
+    document.getElementById("preschool").classList.remove('active');
+    document.getElementById("school").classList.add('active');
+    document.getElementById("sslc").classList.remove('active');
+    document.getElementById("programmes").classList.remove('active');
+  } else if (tab == 'sslc') {
+    populateSelection("district_select",sslcdistrictkeys);
+    document.getElementById("preschool").classList.remove('active');
+    document.getElementById("school").classList.remove('active');
+    document.getElementById("sslc").classList.add('active');
+    document.getElementById("programmes").classList.remove('active');
+  } else if (tab == "programmes") {
+    document.getElementById("preschool").classList.remove('active');
+    document.getElementById("school").classList.remove('active');
+    document.getElementById("sslc").classList.remove('active');
+    document.getElementById("programmes").classList.add('active');
+  }
+}
+
+function showProgrammes()
+{
+  document.getElementById("load_data").innerHTML= '';
+  var content = '<div class="table_header non-breakable">Programmes' + '</div>'
+  content = content + '<div class="assessment_table_wrapper">'
+      + '<table><tr><th class="sub_title lowercase">Current Programmes</th></tr>'
+  for(num in currentprograms)
+  {
+    program=currentprograms[num];
+    content=content+"<tr class='tabular_item'><td>"+program+"</td></tr>";
+  }
+  content=content+"</table></div>"
+  document.getElementById("load_data").innerHTML=content;
+}
+
+function populateSelection(element_id,options_dict)
+{
+  var selected_element = document.getElementById(element_id);
+  var count=1;
+  for( var each in options_dict){
+    selected_element.options[count] = new Option(options_dict[each].name,options_dict[each].id);
+    count = count+1;
+  }
 }
 
 function initialise(statusinfo)
@@ -35,6 +90,12 @@ function initialise(statusinfo)
   sslcdistrictkeys=keys(statusinfo["sslccount"]["children"]).sort();
   currentprograms=statusinfo["currentprograms"];
   showAllBasicData(preschoolcount,schoolcount,sslccount);
+  
+  // Populating the Select boxes
+  schooldistrictkeys=keys(statusinfo["schoolcount"]["children"]).sort();
+  preschooldistrictkeys=keys(statusinfo["preschoolcount"]["children"]).sort();
+  sslcdistrictkeys=keys(statusinfo["sslccount"]["children"]).sort();
+  populateSelection("district_select",preschooldistrictkeys);
 }
 
 function keys(obj)
@@ -53,7 +114,8 @@ function showBasicData(tab, data){
 	var content = '<div class="table_header">Counts</div><table class="break_in_mobile">'
 	content = content + buildBasicContent(tab,data);
 	content = content + '</table>'
-	document.getElementById("load_data").innerHTML=content;
+  document.getElementById("load_data").innerHTML=content;
+  return content;
 }
 
 function showAllBasicData(presch,sch,sslc){
@@ -92,10 +154,26 @@ function buildBasicContent (tab, data) {
 
 function showAssessmentData(incontent,data,depth)
 {
-    content=incontent+"<br><br>";
+    content = incontent;
+
+    content = content + '<div class="table_header non-breakable">Assessment Counts'
+      /*+ '<div class="year_selector">'
+      + '<div class="selection" onclick="$(this).parent().toggleClass(\'open\');">'
+      + '<span class="label">Year:</span> <span class="value png24">2011 - 2012</span></div><ul>'
+      + '<li onclick="$(this).parent().parent().toggleClass(\'open\');return false;"><a href="">2010-2011</a></li>'
+      + '<li onclick="$(this).parent().parent().toggleClass(\'open\');return false;"><a href="">2011-2012</a></li>'
+      + '<li onclick="$(this).parent().parent().toggleClass(\'open\');return false;"><a href="">2012-2013</a></li>'
+      + '</ul></div>*/
+      + '</div>'
+    content = content + '<div class="assessment_table_wrapper"><table><tr>'
+      + '<th class="sub_title lowercase">Boundary</th>'
+      + '<th class="sub_title lowercase">Program Name</th>'
+      + '<th class="sub_title lowercase">Assess Name</th>'
+      + '<th class="sub_title lowercase">Schools Mapped</th>'
+      + '<th class="sub_title lowercase">Schools Assessed</th>'
+      + '<th class="sub_title lowercase">Students Assessed</th></tr>'
     if( depth !==3 )
     {
-      content=content+"<table class='table'><caption>Assessment Counts</caption><tr><td>Boundary</td><td>Program Name</td><td>Assess Name</td><td>Schools Mapped</td><td>Schools Assessed</td><td>Student Assessed</td></tr>";
       var asscount=0;
       var bkeys=keys(data["assessmentcount"]).sort();
       for (bkey in bkeys)
@@ -110,7 +188,7 @@ function showAssessmentData(incontent,data,depth)
           {
              var assname=asskeys[akey];
              asscount=asscount+1;
-             content=content+"<tr><td>"+bname+"</td><td>"+pname+"</td><td>"+assname+"</td><td>"+data["assessmentcount"][bname][pname][assname]["smappedcount"]+"</td><td>"+data["assessmentcount"][bname][pname][assname]["sassessedcount"]+"</td><td>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</td></tr>";
+             content=content+"<tr class='tabular_item'><td>"+bname+"</td><td>"+pname+"</td><td>"+assname+"</td><td>"+data["assessmentcount"][bname][pname][assname]["smappedcount"]+"</td><td>"+data["assessmentcount"][bname][pname][assname]["sassessedcount"]+"</td><td>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</td></tr>";
           }
         }  
       }  
@@ -121,7 +199,6 @@ function showAssessmentData(incontent,data,depth)
     }
     else
     {
-      content=content+"<table class='table'><caption>Assessment Counts</caption><tr><td>Boundary</td><td>Program Name</td><td>Assessment Name</td><td>Student Assessed</td></tr>";
       var asscount=0;
       var bkeys=keys(data["assessmentcount"]).sort();
       for (bkey in bkeys)
@@ -136,17 +213,17 @@ function showAssessmentData(incontent,data,depth)
           {
              var assname=asskeys[akey];
              asscount=asscount+1;
-             content=content+"<tr><td>"+bname+"</td><td>"+pname+"</td><td>"+assname+"</td><td>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</td></tr>";
+             content=content+"<tr class='tabular_item'><td>"+bname+"</td><td>"+pname+"</td><td>"+assname+"</td><td>"+data["assessmentcount"][bname][pname][assname]["stuassessedcount"]+"</td></tr>";
           }
         }  
       }  
       if(asscount==0)
       {
-        content=content+"<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
+        content=content+"<tr class='tabular_item'><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
       }
     
     }
-    content=content+"</table>";
+    content=content+"</table></div>";
       
     document.getElementById("load_data").innerHTML=content;
 }

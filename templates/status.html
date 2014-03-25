@@ -98,32 +98,33 @@ $def with (statusinfo)
 
         <div class="sub-sections-list">
           <ul>
-            <li class="active">
-              <a href="#" onClick="loadData('preschool')" title="">Pre-School</a>
+            <li id="preschool" class="active">
+              <a href="" onClick="loadData('preschool');return false;" title="">Pre-School</a>
             </li>
-            <li>
-              <a href="#" onClick="loadData('school')" title="">School</a>
+            <li id="school" >
+              <a href="" onClick="loadData('school');return false;" title="">School</a>
             </li>
-            <li>
-              <a href="#" onClick="loadData('sslc')" title="">SSLC</a>
+            <li id="sslc">
+              <a href="" onClick="loadData('sslc');return false;" title="">SSLC</a>
             </li>
-            <li>
-              <a href="#" onClick="loadData('programmes')" title="">Current Programmes</a>
+            <li id="programmes">
+              <a href="" onClick="loadData('programmes');return false;" title="">Current Programmes</a>
             </li>
           </ul>
         </div>
         <div class="options-wrapper">
           <div class="option_item" id="district">
+            <select id="district_select"></select>
           </div>
           <div class="option_item" id="block">
+            <select id="block_select"></select>
           </div>
           <div class="option_item" id="cluster">
+            <select id="cluster_select"></select>
           </div>
           <div class="option_item" id="school">
-            <div>
-         
-            </div>
-          </div>
+            <select id="school_select"></select>
+          <div> 
         </div>
       </div>
     </section>

@@ -29,6 +29,7 @@ function loadData(tab)
 
 function activateLink(tab)
 {
+  document.getElementById("select_panel").style.visibility='visible';
   if (tab == 'preschool') {
     populateSelection("district_select",preschooldistrictkeys);
     document.getElementById("preschool").classList.add('active');
@@ -52,7 +53,16 @@ function activateLink(tab)
     document.getElementById("school").classList.remove('active');
     document.getElementById("sslc").classList.remove('active');
     document.getElementById("programmes").classList.add('active');
+    document.getElementById("select_panel").style.visibility='hidden';
   }
+}
+
+function getActiveTab()
+{
+  if (document.getElementById("preschool").classList.contains("active")) return "preschool";
+  if (document.getElementById("school").classList.contains('active')) return "school";
+  if (document.getElementById("sslc").classList.contains('active')) return "sslc";
+  if (document.getElementById("programmes").classList.contains('active')) return "programmes";
 }
 
 function showProgrammes()
@@ -73,31 +83,61 @@ function showProgrammes()
 function populateSelection(element_id,options_dict)
 {
   var selected_element = document.getElementById(element_id);
+  while(selected_element.options.length > 0){                
+    selected_element.remove(0);
+  }
   var count=1;
-  for( var each in options_dict){
-    selected_element.options[count] = new Option(options_dict[each].name,options_dict[each].id);
+  for( var each in options_dict) {
+    selected_element.options[count] = new Option(each,each + '|' + options_dict[each]);
     count = count+1;
   }
+}
+
+function loadDistrictData()
+{
+  var selected_element = document.getElementById("district_select");
+  var selected_value = selected_element.options[selected_element.selectedIndex].value;
+  var name = selected_value.split('|')[0];
+  var id = selected_value.split('|')[1];
+  tab = getActiveTab();
+  var data = null;
+  if (tab == "preschool")
+    data = preschoolcount["children"][name];
+  if (tab == "school")
+    data = schoolcount["children"][name];
+  if (tab == "sslc")
+    data = sslccount["children"][name]
+  content = showBasicData(tab,data )
+  showAssessmentData(content,data,1);
+  
 }
 
 function initialise(statusinfo)
 {
   schoolcount=statusinfo["schoolcount"];
-  schooldistrictkeys=keys(statusinfo["schoolcount"]["children"]).sort();
   preschoolcount=statusinfo["preschoolcount"];
-  preschooldistrictkeys=keys(statusinfo["preschoolcount"]["children"]).sort();
   sslccount=statusinfo["sslccount"];
-  sslcdistrictkeys=keys(statusinfo["sslccount"]["children"]).sort();
   currentprograms=statusinfo["currentprograms"];
   showAllBasicData(preschoolcount,schoolcount,sslccount);
   
   // Populating the Select boxes
-  schooldistrictkeys=keys(statusinfo["schoolcount"]["children"]).sort();
-  preschooldistrictkeys=keys(statusinfo["preschoolcount"]["children"]).sort();
-  sslcdistrictkeys=keys(statusinfo["sslccount"]["children"]).sort();
+  schooldistrictkeys=idDict(statusinfo["schoolcount"]["children"]);
+  preschooldistrictkeys=idDict(statusinfo["preschoolcount"]["children"]);
+  sslcdistrictkeys=idDict(statusinfo["sslccount"]["children"]);
   populateSelection("district_select",preschooldistrictkeys);
 }
 
+function idDict(obj)
+{
+  var dict = {}
+  for (var key in obj)
+  {
+    if(obj.hasOwnProperty(key)){
+      dict[key] = obj[key]["id"];
+    }
+  }
+  return dict;
+}
 function keys(obj)
 {
     var keys = [];

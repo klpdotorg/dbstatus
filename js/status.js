@@ -73,9 +73,12 @@ function loadBoundaryData(selected,type,sub_select)
     data: { get_param: 'value' }, 
     dataType: 'json',
     success: function (data) { 
+      if(type == 'school')
+        showAssessmentData(content,data,3);
+      else
         showAssessmentData(content,data,0);
-        populateSelection(sub_select,idDict(data["children"]));
-        asyncfetch = data["children"];
+      populateSelection(sub_select,idDict(data["children"]));
+      asyncfetch = data["children"];
     }
   });
 }

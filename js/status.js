@@ -56,7 +56,7 @@ function loadClusterData(){
 }
 
 function loadSchoolData(){
-  //loadBoundaryData("school_select","class","class_select")
+  loadBoundaryData("school_select","class","class_select")
 }
 
 function loadBoundaryData(selected,type,sub_select)
@@ -73,7 +73,7 @@ function loadBoundaryData(selected,type,sub_select)
     data: { get_param: 'value' }, 
     dataType: 'json',
     success: function (data) { 
-      if(type == 'school')
+      if(type == 'class')
         showAssessmentData(content,data,3);
       else
         showAssessmentData(content,data,0);
@@ -172,11 +172,12 @@ function showAssessmentData(incontent,data,depth)
       + '<th class="sub_title lowercase">Boundary</th>'
       + '<th class="sub_title lowercase">Program Name</th>'
       + '<th class="sub_title lowercase">Assess Name</th>'
-      + '<th class="sub_title lowercase">Schools Mapped</th>'
-      + '<th class="sub_title lowercase">Schools Assessed</th>'
-      + '<th class="sub_title lowercase">Students Assessed</th></tr>'
+
     if( depth !==3 )
     {
+      content = content + '<th class="sub_title lowercase">Schools Mapped</th>'
+        + '<th class="sub_title lowercase">Schools Assessed</th>'
+        + '<th class="sub_title lowercase">Students Assessed</th></tr>'
       var asscount=0;
       var bkeys=keys(data["assessmentcount"]).sort();
       for (bkey in bkeys)
@@ -197,11 +198,15 @@ function showAssessmentData(incontent,data,depth)
       }  
       if(asscount==0)
       {
+        content = content + '<th class="sub_title lowercase">Schools Mapped</th>'
+        + '<th class="sub_title lowercase">Schools Assessed</th>'
+        + '<th class="sub_title lowercase">Students Assessed</th></tr>'
         content=content+"<tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
       }
     }
     else
     {
+      content = content + '<th class="sub_title lowercase">Students Assessed</th></tr>'
       var asscount=0;
       var bkeys=keys(data["assessmentcount"]).sort();
       for (bkey in bkeys)

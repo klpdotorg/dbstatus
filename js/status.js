@@ -80,10 +80,10 @@ function loadBoundaryData(selected,type,sub_select)
       asyncfetch = result;
     }
   });
-  if(type == 'block')
+  if(type != 'block')
     content = showBasicData(tab,type,name)
   populateSelection(sub_select,idDict(asyncfetch['children']));
-  if(type == 'class')
+  if(type == 'block')
     showAssessmentData(content,asyncfetch,3);
   else
     showAssessmentData(content,asyncfetch,0); 

@@ -23,7 +23,6 @@ function initialise(statusinfo)
 
 function loadData(tab)
 {
-  document.getElementById('load_data').innerHTML ='';
   activateTab(tab);
 	if (tab == 'preschool') {
 		content="<h2>Preschool Counts</h2>";
@@ -66,37 +65,42 @@ function loadBoundaryData(selected,type,sub_select)
   var name = selected_value.split('|')[0];
   var id = selected_value.split('|')[1];
   tab = getActiveTab();
-  var content = showBasicData(tab,type,name)
+  var content;
+  if(type == 'block')
+    content = showBasicData(tab,type,name)
   $.ajax({ 
     type: 'GET', 
     url: "getdata/"+type+"/"+id,
-    data: { get_param: 'value' }, 
     dataType: 'json',
-    success: function (data) { 
-      if(type == 'class')
-        showAssessmentData(content,data,3);
-      else
-        showAssessmentData(content,data,0);
-      populateSelection(sub_select,idDict(data["children"]));
-      asyncfetch = data["children"];
+    async: false,
+    error: function (xhr, status) {
+      alert(status);
+    },
+    success: function (result) {
+      asyncfetch = result;
     }
   });
+  if(type == 'block')
+    content = showBasicData(tab,type,name)
+  populateSelection(sub_select,idDict(asyncfetch['children']));
+  if(type == 'class')
+    showAssessmentData(content,asyncfetch,3);
+  else
+    showAssessmentData(content,asyncfetch,0); 
 }
 
 function showBasicData(tab,type,name){
   var data;
   if (tab == "preschool")
     data = preschoolcount;
-  if (tab == "school")
+  else if (tab == "school")
     data = schoolcount;
-  if (tab == "sslc")
+  else if (tab == "sslc")
     data = sslccount;
-  if(type != "district")
-  {
-    if (type == "block")
-      data = data["children"][name];
-    else 
-      data = asyncfetch[name];
+  if (type == "block") {
+    data = data["children"][name]
+  } else {
+    data = asyncfetch['children'][name];
   }
 
 	var content = '<div class="table_header">Counts</div><table class="break_in_mobile">'
@@ -131,7 +135,7 @@ function showProgrammes()
 }
 
 function buildBasicContent (tab, data) {
-	var heading = ''
+  var heading = ''
 	if (tab == 'preschool')
 		heading = 'Pre-School';
 	else if (tab == 'school')
@@ -157,6 +161,7 @@ function buildBasicContent (tab, data) {
 
 function showAssessmentData(incontent,data,depth)
 {
+    document.getElementById('load_data').innerHTML ='';
     content = incontent;
 
     content = content + '<div class="table_header non-breakable">Assessment Counts'

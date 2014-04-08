@@ -58,6 +58,10 @@ function loadSchoolData(){
   loadBoundaryData("school_select","class_select")
 }
 
+function loadClassData() {
+  loadBoundaryData("class_select","student_select")
+}
+
 function loadBoundaryData(selected,sub_select)
 {
   var selected_element = document.getElementById(selected);

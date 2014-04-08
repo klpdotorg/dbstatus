@@ -32,11 +32,10 @@ function loadData(tab)
   } else if (tab == 'school') {
       content = "<br><br><h2>School Counts</h2>";
     	data=schoolcount;
-    	content = showBasicData(tab,"district",'');
+    	content = showBasicData(tab,'district','');
     	showAssessmentData(content,data,0);
   } else if (tab == 'sslc') {
-      data=sslccount;
-    	showBasicData(tab,"district",'');
+    	showBasicData(tab,'','');
   } else if (tab == "programmes") {
       showProgrammes();
   }
@@ -113,7 +112,7 @@ function showBasicData(tab,type,name){
     if(type == "district")
       data = sslccount['children'][name];
   }
-  if (type != "district") {
+  if (tab != 'sslc' && type != "district") {
     data = asyncfetch[type]['children'][name];
   }  
 
@@ -270,6 +269,7 @@ function activateTab(tab)
   document.getElementById("block").style.visibility='visible';
   document.getElementById("cluster").style.visibility='visible';
   document.getElementById("school_sel").style.visibility='visible';
+  document.getElementById("class_sel").style.visibility='visible';
   if (tab == 'preschool') {
     populateSelection("district_select",preschooldistrictkeys);
     document.getElementById("preschool").classList.add('active');
@@ -291,6 +291,7 @@ function activateTab(tab)
     document.getElementById("block").style.visibility='hidden';
     document.getElementById("cluster").style.visibility='hidden';
     document.getElementById("school_sel").style.visibility='hidden';
+    document.getElementById("class_sel").style.visibility='hidden';
   } else if (tab == "programmes") {
     document.getElementById("preschool").classList.remove('active');
     document.getElementById("school").classList.remove('active');
@@ -316,8 +317,28 @@ function populateSelection(element_id,options_dict)
   }
   var count=1;
   for( var each in options_dict) {
-    selected_element.options[count] = new Option(each,each + '|' + options_dict[each]);
+    selected_element.options[count] = new Option(each.toUpperCase(),each + '|' + options_dict[each]);
     count = count+1;
+  }
+  sortSelection(element_id);
+}
+
+function sortSelection(element_id)
+{
+  var cl = document.getElementById(element_id);
+  var clTexts = new Array();
+
+  for(i = 2; i < cl.length; i++){
+    clTexts[i-2] = cl.options[i].text.toUpperCase() + "," +
+      cl.options[i].text + "," +
+      cl.options[i].value;
+  }
+ clTexts.sort();
+
+  for(i = 2; i < cl.length; i++){
+    var parts = clTexts[i-2].split(',');
+    cl.options[i].text = parts[1];
+    cl.options[i].value = parts[2];
   }
 }
 

@@ -43,50 +43,49 @@ function loadData(tab)
 }
 
 function loadDistrictData(){
-  loadBoundaryData("district_select","block","block_select")
+  loadBoundaryData("district_select","block_select")
 }
 
 function loadBlockData(){
-  loadBoundaryData("block_select","cluster","cluster_select")
+  loadBoundaryData("block_select","cluster_select")
 }
 
 function loadClusterData(){
-  loadBoundaryData("cluster_select","school","school_select")
+  loadBoundaryData("cluster_select","school_select")
 }
 
 function loadSchoolData(){
-  loadBoundaryData("school_select","class","class_select")
+  loadBoundaryData("school_select","class_select")
 }
 
-function loadBoundaryData(selected,type,sub_select)
+function loadBoundaryData(selected,sub_select)
 {
   var selected_element = document.getElementById(selected);
   var selected_value = selected_element.options[selected_element.selectedIndex].value;
   var name = selected_value.split('|')[0];
   var id = selected_value.split('|')[1];
-  tab = getActiveTab();
+  var type = selected.split('_')[0];
+  var fetch_type = sub_select.split('_')[0]; 
+  var tab = getActiveTab();
   var content;
-  if(type == 'block')
-    content = showBasicData(tab,type,name)
+  content = showBasicData(tab,type,name)
   $.ajax({ 
     type: 'GET', 
-    url: "getdata/"+type+"/"+id,
+    url: "getdata/"+fetch_type+"/"+id,
     dataType: 'json',
     async: false,
     error: function (xhr, status) {
       alert(status);
     },
     success: function (result) {
-      asyncfetch = result;
+      asyncfetch[fetch_type] = result;
     }
   });
-  if(type != 'block')
-    content = showBasicData(tab,type,name)
-  populateSelection(sub_select,idDict(asyncfetch['children']));
-  if(type == 'block')
-    showAssessmentData(content,asyncfetch,3);
+  populateSelection(sub_select,idDict(asyncfetch[fetch_type]['children']));
+  if(type == 'cluster')
+    showAssessmentData(content,asyncfetch[fetch_type],3);
   else
-    showAssessmentData(content,asyncfetch,0); 
+    showAssessmentData(content,asyncfetch[fetch_type],0); 
 }
 
 function showBasicData(tab,type,name){
@@ -97,11 +96,9 @@ function showBasicData(tab,type,name){
     data = schoolcount;
   else if (tab == "sslc")
     data = sslccount;
-  if (type == "block") {
-    data = data["children"][name]
-  } else {
-    data = asyncfetch['children'][name];
-  }
+  if (type != "district") {
+    data = asyncfetch[type]['children'][name];
+  }  
 
 	var content = '<div class="table_header">Counts</div><table class="break_in_mobile">'
 	content = content + buildBasicContent(tab,data);

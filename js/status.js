@@ -71,26 +71,35 @@ function loadBoundaryData(selected,sub_select)
   var type = selected.split('_')[0];
   var fetch_type = sub_select.split('_')[0]; 
   var tab = getActiveTab();
-  var content;
-  content = showBasicData(tab,type,name)
-  $.ajax({ 
-    type: 'GET', 
-    url: "getdata/"+fetch_type+"/"+id,
-    dataType: 'json',
-    async: false,
-    error: function (xhr, status) {
-      alert(status);
-    },
-    success: function (result) {
-      asyncfetch[fetch_type] = result;
+  if(tab == 'sslc'){
+    content = showBasicData(tab,'district',name)
+  } else {
+    var content;
+    content = showBasicData(tab,type,name)
+    $.ajax({ 
+      type: 'GET', 
+      url: "getdata/"+fetch_type+"/"+id,
+      dataType: 'json',
+      async: false,
+      error: function (xhr, status) {
+        alert(status);
+      },
+      success: function (result) {
+        asyncfetch[fetch_type] = result;
+      }
+    });
+    if(type != 'class')
+      populateSelection(sub_select,idDict(asyncfetch[fetch_type]['children']));
+    if(type != 'block' || type !='district')
+    {
+      if(type == 'class')
+        showAssessmentData(content,asyncfetch['class']['children'][name],3); 
+      else
+        showAssessmentData(content,asyncfetch[fetch_type],3); // 4 column display
     }
-  });
-  if(type != 'class')
-    populateSelection(sub_select,idDict(asyncfetch[fetch_type]['children']));
-  if(type != 'block' || type !='district')
-    showAssessmentData(content,asyncfetch[fetch_type],3); // 4 column display
-  else
-    showAssessmentData(content,asyncfetch[fetch_type],0); // 6 column display
+    else
+      showAssessmentData(content,asyncfetch[fetch_type],0); // 6 column display
+  }
 }
 
 function showBasicData(tab,type,name){
@@ -99,8 +108,11 @@ function showBasicData(tab,type,name){
     data = preschoolcount;
   else if (tab == "school")
     data = schoolcount;
-  else if (tab == "sslc")
+  else if (tab == "sslc") {
     data = sslccount;
+    if(type == "district")
+      data = sslccount['children'][name];
+  }
   if (type != "district") {
     data = asyncfetch[type]['children'][name];
   }  

@@ -85,7 +85,8 @@ function loadBoundaryData(selected,sub_select)
       asyncfetch[fetch_type] = result;
     }
   });
-  populateSelection(sub_select,idDict(asyncfetch[fetch_type]['children']));
+  if(type != 'class')
+    populateSelection(sub_select,idDict(asyncfetch[fetch_type]['children']));
   if(type != 'block' || type !='district')
     showAssessmentData(content,asyncfetch[fetch_type],3); // 4 column display
   else
@@ -145,11 +146,13 @@ function buildBasicContent (tab, data) {
 		heading = 'Secondary School'
 	var content = '<tr><th class="sub_title" colspan="4">' + heading + '</th></tr>'
   if(data["scount"] != undefined) {
-    content = content + '<tr><td class="circular_count_item"><p>Active '+ heading + ' Count</p>' + data["scount"] +'<p class="value"></p></td>'
+    content = content + '<tr><td class="circular_count_item"><p>Active '+ heading + ' Count</p><p class="value">' + data["scount"] + '</p></td>'
   }
-	if(tab != 'sslc' && data["sstucount"] != undefined) {
-		content = content + '<td class="circular_count_item"><p>Active '+ heading +' with Students Count</p>'
-    content = content + '<p class="value">' + data["sstucount"] + '</p></td>'
+	if(tab != 'sslc' ) {
+    if(data["sstucount"] != undefined) {
+		  content = content + '<td class="circular_count_item"><p>Active '+ heading +' with Students Count</p>'
+      content = content + '<p class="value">' + data["sstucount"] + '</p></td>'
+    }
   }
 	else {
 		content = content + '<td class="circular_count_item"><p>Students who appeared for SSLC</p><p class="value">' + data["stucount"] + '</p></td>'	

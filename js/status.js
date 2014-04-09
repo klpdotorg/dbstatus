@@ -114,7 +114,10 @@ function showBasicData(tab,type,name){
   }
   if (tab != 'sslc' && type != "district") {
     data = asyncfetch[type]['children'][name];
-  }  
+  } 
+  if (type == "district") {
+    data = data["children"][name];
+  }
 
 	var content = '<div class="table_header">Counts</div><table class="break_in_mobile">'
 	content = content + buildBasicContent(tab,data);

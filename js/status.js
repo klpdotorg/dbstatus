@@ -23,19 +23,19 @@ function initialise(statusinfo)
 
 function loadData(tab)
 {
-  activateTab(tab);
+  manageTab(tab);
 	if (tab == 'preschool') {
 		content="<h2>Preschool Counts</h2>";
       data=preschoolcount;
-      content = showBasicData(tab,"district",'');
+      content = showBasicData(tab,'initialise','');
     	showAssessmentData(content,data,0);
   } else if (tab == 'school') {
       content = "<br><br><h2>School Counts</h2>";
     	data=schoolcount;
-    	content = showBasicData(tab,'district','');
+    	content = showBasicData(tab,'initialise','');
     	showAssessmentData(content,data,0);
   } else if (tab == 'sslc') {
-    	showBasicData(tab,'','');
+    	showBasicData(tab,'initialise','');
   } else if (tab == "programmes") {
       showProgrammes();
   }
@@ -112,11 +112,13 @@ function showBasicData(tab,type,name){
     if(type == "district")
       data = sslccount['children'][name];
   }
-  if (tab != 'sslc' && type != "district") {
-    data = asyncfetch[type]['children'][name];
-  } 
-  if (type == "district") {
-    data = data["children"][name];
+  if (type != "initialise") {
+    if (tab != 'sslc' ) {
+      if (type != "district") 
+        data = asyncfetch[type]['children'][name];
+      else 
+        data = data["children"][name];
+    }
   }
 
 	var content = '<div class="table_header">Counts</div><table class="break_in_mobile">'
@@ -265,9 +267,11 @@ function showAssessmentData(incontent,data,depth)
 }
 
 
-function activateTab(tab)
+function manageTab(tab)
 {
   clearSelections();
+  activateTab(tab);
+  changeLabels(tab);
   document.getElementById("select_panel").style.visibility='visible';
   document.getElementById("block").style.visibility='visible';
   document.getElementById("cluster").style.visibility='visible';
@@ -275,33 +279,45 @@ function activateTab(tab)
   document.getElementById("class_sel").style.visibility='visible';
   if (tab == 'preschool') {
     populateSelection("district_select",preschooldistrictkeys);
-    document.getElementById("preschool").classList.add('active');
-    document.getElementById("school").classList.remove('active');
-    document.getElementById("sslc").classList.remove('active');
-    document.getElementById("programmes").classList.remove('active');
   } else if (tab == 'school') {
     populateSelection("district_select",schooldistrictkeys);
-    document.getElementById("preschool").classList.remove('active');
-    document.getElementById("school").classList.add('active');
-    document.getElementById("sslc").classList.remove('active');
-    document.getElementById("programmes").classList.remove('active');
   } else if (tab == 'sslc') {
     populateSelection("district_select",sslcdistrictkeys);
-    document.getElementById("preschool").classList.remove('active');
-    document.getElementById("school").classList.remove('active');
-    document.getElementById("sslc").classList.add('active');
-    document.getElementById("programmes").classList.remove('active');
     document.getElementById("block").style.visibility='hidden';
     document.getElementById("cluster").style.visibility='hidden';
     document.getElementById("school_sel").style.visibility='hidden';
     document.getElementById("class_sel").style.visibility='hidden';
   } else if (tab == "programmes") {
-    document.getElementById("preschool").classList.remove('active');
-    document.getElementById("school").classList.remove('active');
-    document.getElementById("sslc").classList.remove('active');
-    document.getElementById("programmes").classList.add('active');
     document.getElementById("select_panel").style.visibility='hidden';
   }
+}
+
+function changeLabels (tab) {
+  if(tab == "preschool"){
+    var block = document.getElementById("block").innerHTML 
+    document.getElementById("block").innerHTML = block.replace("Block","Project");
+    var cluster = document.getElementById("cluster").innerHTML 
+    document.getElementById("cluster").innerHTML = cluster.replace("Cluster","Circle");
+    var school = document.getElementById("school_sel").innerHTML 
+    document.getElementById("school_sel").innerHTML = school.replace("School","Preschool");
+  } else {
+    var block = document.getElementById("block").innerHTML 
+    document.getElementById("block").innerHTML = block.replace("Project","Block");
+    var cluster = document.getElementById("cluster").innerHTML 
+    document.getElementById("cluster").innerHTML = cluster.replace("Circle","Cluster");
+    var school = document.getElementById("school_sel").innerHTML 
+    document.getElementById("school_sel").innerHTML = school.replace("Preschool","School");
+  }
+}
+
+function activateTab(tab)
+{
+  var tabs = ["preschool","school","sslc","programmes"]
+  for (var each in tabs) {
+    if (tabs[each] != tab)
+      document.getElementById(tabs[each]).classList.remove('active');
+  }
+  document.getElementById(tab).classList.add('active')
 }
 
 function getActiveTab()
@@ -347,11 +363,13 @@ function sortSelection(element_id)
 
 function clearSelections()
 {
-  var sel_array = ['block_select','cluster_select','school_select'];
+  var sel_array = ['block','cluster','school_sel'];
   for (var each in sel_array) {
     selection = document.getElementById(sel_array[each]);
-    while(selection.options.length > 0){
-      selection.remove(0);
+    if(selection.options != undefined && selection.options.length > 0) {
+      while(selection.options.length > 0) {
+        selection.remove(0);
+      }
     }
   }
 }

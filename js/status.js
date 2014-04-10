@@ -175,10 +175,10 @@ function buildBasicContent (tab, data) {
   }
 	content = content + '<td class="circular_count_item"><p>Active Students Count</p><p class="value">' + data["stucount"] + '</p></td>'
 		+ '<td><div class="stats_gender_item boy">'
-		+ '<span class="icon png24"></span><p class="label"><span>5400</span> boys</p><p class="value">65%</p>'
+		+ '<span class="icon png24"></span><p class="label"><span>' + data["boys"] + '</span> boys</p><p class="value">' + Math.floor((data["boys"] / data["stucount"] * 100)) + '%</p>'
 		+ '<div class="clr"></div></div>'
 		+ '<div class="stats_gender_item girl">'
-		+ '<span class="icon png24"></span><p class="label"><span>2700</span> boys</p><p class="value">35%</p>'
+		+ '<span class="icon png24"></span><p class="label"><span>' + data["girls"] + '</span> girls</p><p class="value">'+ Math.floor((data["girls"] / data["stucount"] * 100)) + '%</p>'
 		+ '<div class="clr"></div></div></tr>'
 	return content
 }

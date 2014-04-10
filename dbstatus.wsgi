@@ -85,13 +85,21 @@ def sendMail(body,file=None):
 
 
 
-statements = {"district_boundarycounts":"select b.name as name,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b where bs.id=b.id and b.boundary_category_id=$id",
-"block_boundarycounts":"select b2.name as b2name,b1.name as name,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b1 ,vw_boundary b2 where bs.id=b1.id and b1.parent_id=b2.id and b2.id=$id",
-"cluster_boundarycounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b,vw_boundary b1 ,vw_boundary b2 where bs.id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and b1.id=$id",
-               "schoolcounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,s.name as sname,sstu.id as id,sstu.studentcount as stucount,sass.progname as progname,sass.assessname as assessname,sass.student_assess_count as stuassessedcount from tb_schoolstudentcount sstu left outer join tb_schoolassessmentcount sass on (sstu.id=sass.id), vw_boundary b,vw_boundary b1, vw_boundary b2,vw_school s where sstu.id=s.id and s.boundary_id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and b.id=$id",
-               "classcounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,s.name as sname,ARRAY_TO_STRING(ARRAY[cstu.class,cstu.section],' ') as name,cstu.id as id,cstu.studentcount as stucount,cass.progname as progname,cass.assessname as assessname,cass.student_assess_count as stuassessedcount from tb_classstudentcount cstu left outer join tb_classassessmentcount cass on (cstu.id=cass.id), vw_boundary b,vw_boundary b1,vw_boundary b2,vw_school s where cstu.sid=s.id and s.boundary_id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and s.id=$id",
-            "currentprograms":"select * from tb_currentprograms order by progname",
-            "sslc_counts":"select distinct district as district,sum(sch_count) as schcount,sum(tot_stu_count) stucount from vw_sslc_sch_agg group by district",
+statements = {
+
+"district_boundarycounts":"select b.name as name,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bstu.boys as boys,bstu.girls as girls, bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b where bs.id=b.id and b.boundary_category_id=$id",
+
+"block_boundarycounts":"select b2.name as b2name,b1.name as name,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bstu.boys as boys,bstu.girls as girls, bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b1 ,vw_boundary b2 where bs.id=b1.id and b1.parent_id=b2.id and b2.id=$id",
+
+"cluster_boundarycounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,bs.id as id,bs.count as scount,bstu.scount as sstucount,bstu.stucount as stucount,bstu.boys as boys,bstu.girls as girls,bass.progname as progname,bass.assessname as assessname,bass.school_mapped_count as smappedcount,bass.school_assess_count as sassessedcount,bass.student_assess_count as stuassessedcount from tb_boundary_schoolcount bs left outer join tb_boundary_studentcount bstu on (bs.id=bstu.id) left outer join tb_boundary_assessmentcount bass on (bs.id=bass.id),vw_boundary b,vw_boundary b1 ,vw_boundary b2 where bs.id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and b1.id=$id",
+
+"schoolcounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,s.name as sname,sstu.id as id,sstu.studentcount as stucount,sstu.boys as boys, sstu.girls as girls, sass.progname as progname,sass.assessname as assessname,sass.student_assess_count as stuassessedcount from tb_schoolstudentcount sstu left outer join tb_schoolassessmentcount sass on (sstu.id=sass.id), vw_boundary b,vw_boundary b1, vw_boundary b2,vw_school s where sstu.id=s.id and s.boundary_id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and b.id=$id",
+
+"classcounts":"select b2.name as b2name,b1.name as b1name,b.name as bname,s.name as sname,ARRAY_TO_STRING(ARRAY[cstu.class,cstu.section],' ') as name,cstu.id as id,cstu.studentcount as stucount,cstu.boys as boys,cstu.girls as girls, cass.progname as progname,cass.assessname as assessname,cass.student_assess_count as stuassessedcount from tb_classstudentcount cstu left outer join tb_classassessmentcount cass on (cstu.id=cass.id), vw_boundary b,vw_boundary b1,vw_boundary b2,vw_school s where cstu.sid=s.id and s.boundary_id=b.id and b.parent_id=b1.id and b1.parent_id=b2.id and s.id=$id",
+
+"currentprograms":"select * from tb_currentprograms order by progname",
+
+"sslc_counts":"select distinct district as district,sum(sch_count) as schcount,sum(tot_stu_count) stucount from vw_sslc_sch_agg group by district",
 }
 render_plain = web.template.render('templates/')
 
@@ -106,8 +114,8 @@ def convertNone(value):
 
 class getstatus:
   def __init__(self):
-    self.schoolcount={"scount":0,"stucount":0,"sstucount":0,"assessmentcount":{},"children":{}}
-    self.preschoolcount={"scount":0,"stucount":0,"sstucount":0,"assessmentcount":{},"children":{}}
+    self.schoolcount={"scount":0,"stucount":0,"sstucount":0,"boys":0,"girls":0,"assessmentcount":{},"children":{}}
+    self.preschoolcount={"scount":0,"stucount":0,"sstucount":0,"boys":0,"girls":0,"assessmentcount":{},"children":{}}
     self.currentprograms=[]
     self.sslccount={"scount":0,"stucount":0,"children":{}}
     self.updatedtime=""
@@ -118,6 +126,8 @@ class getstatus:
         scount=convertNone(row["scount"])
         sstucount=convertNone(row["sstucount"])
         stucount=convertNone(row["stucount"])
+        boys=convertNone(row["boys"])
+        girls=convertNone(row["girls"])
         progname=str(row["progname"])
         assessname=str(row["assessname"])
         smappedcount=convertNone(row["smappedcount"])
@@ -139,16 +149,20 @@ class getstatus:
             datacount["assessmentcount"][name]={progname:{assessname:{"stuassessedcount":stuassessedcount,"sassessedcount":sassessedcount,"smappedcount":smappedcount}}}
 
           if name not in datacount["children"]:
-            datacount["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"assessmentcount":{},"children":{}}
+            datacount["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
             datacount["scount"]=datacount["scount"]+scount
             datacount["sstucount"]=datacount["sstucount"]+sstucount
             datacount["stucount"]=datacount["stucount"]+stucount
+            datacount["boys"]=datacount["boys"]+boys
+            datacount["girls"]=datacount["girls"]+girls
         else:
             if name not in datacount["children"]:
-              datacount["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"assessmentcount":{},"children":{}}
-            datacount["scount"]=datacount["scount"]+scount
-            datacount["sstucount"]=datacount["sstucount"]+sstucount
-            datacount["stucount"]=datacount["stucount"]+stucount
+              datacount["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
+              datacount["scount"]=datacount["scount"]+scount
+              datacount["sstucount"]=datacount["sstucount"]+sstucount
+              datacount["stucount"]=datacount["stucount"]+stucount
+              datacount["boys"]=datacount["boys"]+boys
+              datacount["girls"]=datacount["girls"]+girls
      
       
   def GET(self):
@@ -202,6 +216,8 @@ class getData:
           scount=convertNone(row["scount"])
           sstucount=convertNone(row["sstucount"])
           stucount=convertNone(row["stucount"])
+          boys=convertNone(row["boys"])
+          girls=convertNone(row["girls"])
           progname=str(row["progname"])
           assessname=str(row["assessname"])
           smappedcount=convertNone(row["smappedcount"])
@@ -217,10 +233,10 @@ class getData:
             else:
               data["assessmentcount"][name]={progname:{assessname:{"smappedcount":smappedcount,"sassessedcount":sassessedcount,"stuassessedcount":stuassessedcount}}}
             if name not in data["children"]:
-               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"assessmentcount":{},"children":{}}
+               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
           else:
             if name not in data["children"]:
-               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"assessmentcount":{},"children":{}}
+               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
 
       elif type=="cluster":
         result=db.query(statements["cluster_boundarycounts"],vars={'id':pid})
@@ -233,6 +249,8 @@ class getData:
           scount=convertNone(row["scount"])
           sstucount=convertNone(row["sstucount"])
           stucount=convertNone(row["stucount"])
+          boys=convertNone(row["boys"])
+          girls=convertNone(row["girls"])
           progname=str(row["progname"])
           assessname=str(row["assessname"])
           smappedcount=convertNone(row["smappedcount"])
@@ -248,10 +266,10 @@ class getData:
             else:
               data["assessmentcount"][name]={progname:{assessname:{"smappedcount":smappedcount,"sassessedcount":sassessedcount,"stuassessedcount":stuassessedcount}}}
             if name not in data["children"]:
-               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"assessmentcount":{},"children":{}}
+               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
           else:
             if name not in data["children"]:
-               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"assessmentcount":{},"children":{}}
+               data["children"][name]={"id":id,"name":name,"scount":scount,"sstucount":sstucount,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
 
 
       elif type=="school":
@@ -263,6 +281,8 @@ class getData:
           name=str(row["sname"])
           id=row["id"]
           stucount=convertNone(row["stucount"])
+          boys=convertNone(row["boys"])
+          girls=convertNone(row["girls"])
           progname=str(row["progname"])
           assessname=str(row["assessname"])
           stuassessedcount=convertNone(row["stuassessedcount"])
@@ -276,10 +296,10 @@ class getData:
             else:
               data["assessmentcount"][name]={progname:{assessname:{"stuassessedcount":stuassessedcount}}}
             if name not in data["children"]:
-               data["children"][name]={"id":id,"name":name,"stucount":stucount,"assessmentcount":{},"children":{}}
+               data["children"][name]={"id":id,"name":name,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
           else:
             if name not in data["children"]:
-               data["children"][name]={"id":id,"name":name,"stucount":stucount,"assessmentcount":{},"children":{}}
+               data["children"][name]={"id":id,"name":name,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
 
 
       elif type=="class":
@@ -293,6 +313,8 @@ class getData:
           name=str(row["name"])
           id=row["id"]
           stucount=convertNone(row["stucount"])
+          boys=convertNone(row["boys"])
+          girls=convertNone(row["girls"])
           progname=str(row["progname"])
           assessname=str(row["assessname"])
           stuassessedcount=convertNone(row["stuassessedcount"])
@@ -307,10 +329,10 @@ class getData:
                 data["children"][name]["assessmentcount"][name][progname]={assessname:{"stuassessedcount":stuassessedcount}}
             else:
               data["assessmentcount"][name]={progname:{assessname:{"stuassessedcount":stuassessedcount}}}
-              data["children"][name]={"id":id,"name":name,"stucount":stucount,"assessmentcount":{name:{progname:{assessname:{"stuassessedcount":stuassessedcount}}}},"children":{}}
+              data["children"][name]={"id":id,"name":name,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{name:{progname:{assessname:{"stuassessedcount":stuassessedcount}}}},"children":{}}
           else:
             if name not in data["children"]:
-               data["children"][name]={"id":id,"name":name,"stucount":stucount,"assessmentcount":{},"children":{}}
+               data["children"][name]={"id":id,"name":name,"stucount":stucount,"boys":boys,"girls":girls,"assessmentcount":{},"children":{}}
 
 
     except:

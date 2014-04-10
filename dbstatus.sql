@@ -14,9 +14,10 @@ CREATE TABLE "tb_boundary_schoolcount" (
 DROP TABLE IF EXISTS "tb_boundary_studentcount" cascade;
 CREATE TABLE "tb_boundary_studentcount" (
   "id" integer,
-  "gender" varchar(10),
   "scount" integer,
-  "stucount" integer
+  "stucount" integer,
+  "boys" integer,
+  "girls" integer
 );
 
 DROP TABLE IF EXISTS "tb_boundary_assessmentcount" cascade;
@@ -32,8 +33,9 @@ CREATE TABLE "tb_boundary_assessmentcount" (
 DROP TABLE IF EXISTS "tb_schoolstudentcount" cascade;
 CREATE TABLE "tb_schoolstudentcount" (
   "id" integer,
-  "gender" varchar(10),
-  "studentcount" integer
+  "studentcount" integer,
+  "boys" integer,
+  "girls" integer
 );
 
 
@@ -43,8 +45,9 @@ CREATE TABLE "tb_classstudentcount" (
   "sid" integer,
   "class" varchar(20),
   "section" varchar(10),
-  "gender" varchar(10),
-  "studentcount" integer
+  "studentcount" integer,
+  "boys" integer,
+  "girls" integer
 );
 
 DROP TABLE IF EXISTS "tb_currentprograms" cascade;

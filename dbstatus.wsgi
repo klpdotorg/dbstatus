@@ -99,7 +99,7 @@ statements = {
 
 "currentprograms":"select * from tb_currentprograms order by progname",
 
-"sslc_counts":"select distinct district as district,sum(sch_count) as schcount,sum(tot_stu_count) stucount from vw_sslc_sch_agg group by district",
+"sslc_counts":"select distinct district as district,sum(sch_count) as schcount,sum(tot_stu_count) stucount, sum(case when gender='B' then tot_stu_count else 0 end) as boys,sum(case when gender='G' then tot_stu_count else 0 end) as girls from vw_sslc_sch_agg group by district",
 }
 render_plain = web.template.render('templates/')
 
@@ -117,7 +117,7 @@ class getstatus:
     self.schoolcount={"scount":0,"stucount":0,"sstucount":0,"boys":0,"girls":0,"assessmentcount":{},"children":{}}
     self.preschoolcount={"scount":0,"stucount":0,"sstucount":0,"boys":0,"girls":0,"assessmentcount":{},"children":{}}
     self.currentprograms=[]
-    self.sslccount={"scount":0,"stucount":0,"children":{}}
+    self.sslccount={"scount":0,"stucount":0,"boys":0,"girls":0,"children":{}}
     self.updatedtime=""
   def getDistrictData(self,result,datacount):
       for row in result:
@@ -178,10 +178,14 @@ class getstatus:
       for row in result:
         self.sslccount["scount"]=self.sslccount["scount"]+int(row["schcount"])
         self.sslccount["stucount"]=self.sslccount["stucount"]+int(row["stucount"])
+        self.sslccount["boys"]=self.sslccount["boys"]+int(row["boys"])
+        self.sslccount["girls"]=self.sslccount["girls"]+int(row["girls"])
         self.sslccount["children"][str(row["district"])]={}
         self.sslccount["children"][str(row["district"])]["name"]=str(row["district"])
         self.sslccount["children"][str(row["district"])]["scount"]=int(row["schcount"])
         self.sslccount["children"][str(row["district"])]["stucount"]=int(row["stucount"])
+        self.sslccount["children"][str(row["district"])]["boys"]=int(row["boys"])
+        self.sslccount["children"][str(row["district"])]["girls"]=int(row["girls"])
 
       result=db.query(statements["currentprograms"])
       for row in result:

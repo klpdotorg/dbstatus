@@ -89,7 +89,7 @@ function loadBoundaryData(selected,sub_select)
     });
     if(type != 'class')
       populateSelection(sub_select,idDict(asyncfetch[fetch_type]['children']));
-    if(type != 'block' || type !='district')
+    if(type != 'block' && type !='district')
     {
       if(type == 'class')
         showAssessmentData(content,asyncfetch['class']['children'][name],3); 
@@ -175,10 +175,10 @@ function buildBasicContent (tab, data) {
   }
 	content = content + '<td class="circular_count_item"><p>Active Students Count</p><p class="value">' + data["stucount"] + '</p></td>'
 		+ '<td><div class="stats_gender_item boy">'
-		+ '<span class="icon png24"></span><p class="label"><span>' + data["boys"] + '</span> boys</p><p class="value">' + Math.floor((data["boys"] / data["stucount"] * 100)) + '%</p>'
+		+ '<span class="icon png24"></span><p class="label"><span>' + fixNan(data["boys"]) + '</span> boys</p><p class="value">' + fixNan(Math.floor((data["boys"] / data["stucount"] * 100))) + '%</p>'
 		+ '<div class="clr"></div></div>'
 		+ '<div class="stats_gender_item girl">'
-		+ '<span class="icon png24"></span><p class="label"><span>' + data["girls"] + '</span> girls</p><p class="value">'+ Math.floor((data["girls"] / data["stucount"] * 100)) + '%</p>'
+		+ '<span class="icon png24"></span><p class="label"><span>' + fixNan(data["girls"]) + '</span> girls</p><p class="value">'+ fixNan(Math.floor((data["girls"] / data["stucount"] * 100))) + '%</p>'
 		+ '<div class="clr"></div></div></tr>'
 	return content
 }
@@ -407,3 +407,10 @@ function isEmpty(obj)
     return true;
 } 
 
+function fixNan(val)
+{
+   if (isNaN(val)) 
+     return 0;
+   else
+     return val;
+}

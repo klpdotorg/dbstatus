@@ -8,7 +8,14 @@
 DROP TABLE IF EXISTS "tb_boundary_schoolcount" cascade;
 CREATE TABLE "tb_boundary_schoolcount" (
   "id" integer,
-  "count" integer
+  "tot_count" integer,
+  "active_count" integer
+);
+
+DROP TABLE IF EXISTS "tb_boundary_totalstudentcount" cascade;
+CREATE TABLE "tb_boundary_totalstudentcount" (
+  "id" integer,
+  "stucount" integer
 );
 
 DROP TABLE IF EXISTS "tb_boundary_studentcount" cascade;

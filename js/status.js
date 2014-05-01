@@ -180,9 +180,14 @@ function buildBasicContent (tab, data) {
 		+ '<div class="stats_gender_item girl">'
 		+ '<span class="icon png24"></span><p class="label"><span>' + fixNan(data["girls"]) + '</span> girls</p><p class="value">'+ fixNan(Math.floor((data["girls"] / data["stucount"] * 100))) + '%</p>'
 		+ '<div class="clr"></div></div></tr>'
+  if(data["totcount"] != undefined){
+    content = content + '<tr><th class="sub_title" colspan="4">Total ' + heading + ' Counts</th></tr>';
+    content = content + '<tr><td colspan="2" class="circular_count_item"><p>'+ heading + ' Count (Current and Historical) </p><p class="value">' + data["totcount"] + '</p></td>';
+    content = content + '<td colspan = "2" class="circular_count_item"><p>Students Count (Current and Historical) </p>';
+    content = content + '<p class="value">' + data["totstucount"] + '</p></td></tr>';
+  }
 	return content
 }
-
 
 function showAssessmentData(incontent,data,depth)
 {

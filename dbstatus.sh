@@ -35,7 +35,7 @@ psql -U ${OWNER} -d ${DBNAME} -f ${SCRIPT_DIR}/${DBNAME}.sql
 echo creating csvs
 
 # Load ${DBNAME}
-python ${SCRIPT_DIR}/${DBNAME}.py
+#python ${SCRIPT_DIR}/${DBNAME}.py
 echo Finished creating csv files
 echo Loading data into ${DBNAME}
 sudo -u postgres psql -d ${DBNAME} -f ${SCRIPT_DIR}/load/load.sql

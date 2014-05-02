@@ -105,11 +105,12 @@ CREATE OR REPLACE VIEW vw_school as
               cat_id integer);
 
 CREATE OR REPLACE VIEW vw_sslc_sch_agg as
-       select * from dblink('host=localhost dbname=sslc_dataagg user=klp password=password','select dist.dist_name,agg.ayid,agg.is_govt,agg.gender,agg.sch_count,agg.tot_stu_count,agg.pass_stu_count from tb_sslc_dbstatus_agg agg,tb_district dist where agg.dist_code=dist.dist_code and agg.ayid=102')
+       select * from dblink('host=localhost dbname=sslc_dataagg user=klp password=password','select dist.dist_name,agg.ayid,agg.is_govt,agg.sch_count,agg.girls,agg.boys,agg.tot_stu_count,agg.pass_stu_count from tb_sslc_dbstatus_agg agg,tb_district dist where agg.dist_code=dist.dist_code and agg.ayid=102')
        as t1 (district varchar(32),
               ayid integer,
               is_govt varchar(3),
-              gender varchar(3),
               sch_count integer,
+              girls integer,
+              boys integer,
               tot_stu_count integer,
               pass_stu_count integer);

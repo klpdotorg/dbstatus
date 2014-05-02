@@ -19,6 +19,8 @@ function initialise(statusinfo)
   preschooldistrictkeys=idDict(statusinfo["preschoolcount"]["children"]);
   sslcdistrictkeys=idDict(statusinfo["sslccount"]["children"]);
   populateSelection("district_select",preschooldistrictkeys);
+  document.getElementById("lastupdated").innerHTML = '<center><h4>Last updated on '+statusinfo["updatedtime"] + '</h4></center>'
+
 }
 
 function loadData(tab)

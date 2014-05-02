@@ -99,7 +99,7 @@ statements = {
 
 "currentprograms":"select * from tb_currentprograms order by progname",
 
-"sslc_counts":"select distinct district as district,sum(sch_count) as schcount,sum(tot_stu_count) stucount, sum(case when gender='B' then tot_stu_count else 0 end) as boys,sum(case when gender='G' then tot_stu_count else 0 end) as girls from vw_sslc_sch_agg group by district",
+"sslc_counts":"select distinct district as district,sum(sch_count) as schcount,sum(tot_stu_count) stucount, sum(boys) as boys,sum(girls) as girls from vw_sslc_sch_agg group by district",
 }
 render_plain = web.template.render('templates/')
 

@@ -370,7 +370,7 @@ function sortSelection(element_id)
 
 function clearSelections()
 {
-  var sel_array = ['block','cluster','school_sel','class_sel'];
+  var sel_array = ['block_select','cluster_select','school_select','class_select'];
   for (var each in sel_array) {
     selection = document.getElementById(sel_array[each]);
     if(selection.options != undefined && selection.options.length > 0) {

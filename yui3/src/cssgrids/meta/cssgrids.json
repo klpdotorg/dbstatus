@@ -1,9 +1,0 @@
-{
-    "cssgrids": {
-        "optional": [
-            "cssreset",
-            "cssfonts"
-        ], 
-        "type": "css"
-    }
-}

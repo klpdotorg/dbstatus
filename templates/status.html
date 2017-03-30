@@ -1,88 +1,140 @@
 $def with (statusinfo)
+
 <!DOCTYPE html>
 <html lang="en">
-<head>      <!-- META -->
-    <title>Status</title>
-    
-    <link rel="icon" href="/images/favicon.ico"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <head>
+  	<!-- META -->
+  	<title>Status</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-
-    <script type="text/javascript" src="/js/libs.combined.js"></script>
+    <link rel="icon" href="https://klp.org.in/static/images/favicon.png">
+  	<meta name="description" content="">
+    <link rel="stylesheet" href="https://klp.org.in/static/css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/css/style.css?a=3" type="text/css" media="all" />
     <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.stickOnScroll.js"></script>
+    <script type="text/javascript" src="/js/libs.combined.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/lib/iCheck/jquery.icheck.min.js"></script>
-    <script type="text/javascript" src="/yui3/build/yui/yui-min.js"></script>
-    <!--script type="text/javascript" src="/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-    <script type="text/javascript" src="/yui/build/treeview/treeview-min.js"></script-->
-    <script type="text/javascript" src="/js/status.js"></script>
-
-    <link type="text/css" rel="stylesheet" href="/js/lib/iCheck/skins/minimal/minimal.css" media="all"/>
-    <link type="text/css" rel="stylesheet" href="/css/style.css" media="all"/>
+    <script type="text/javascript" src="/js/status.js?a=1"></script>
     
-</head>
+    <script>
+        window.klp = {};
+    </script>
 
-<body>
-<header class="main-header">
-    <div class="header-content">
-      <a href="/" class="header_mobile_logo"></a>
-      <a class="mobile_icon" onclick="toggle_mobile_nav();"></a>
-      <nav class="top-nav" role="navigation">
-        <ul id="navigation">
-          <li class="home">
-            <a href="http://www.klp.org.in" title=""><h1>Karnataka Learning Partnership</h1></a>
-          </li>
-          <li class="school_map">
-            <a href="http://www.klp.org.in/map" title="">School Map</a>
-          </li>
-          <li class="programmes">
-            <a href="http://www.klp.org.in/text/reading" title="">Programmes</a>
-            <ul>
-              <li><a href="http://www.klp.org.in/text/reading" title=""><span></span>Akshara</a></li>
-              <li><a href="http://www.klp.org.in/text/sikshana" title=""><span></span>Sikshana</a></li>
-            </ul>
-          </li>
-          <li class="volunteer"><a href="http://www.klp.org.in/text/volunteer" title="">Volunteer</a></li>
-          <li class="database">
-            <a href="http://www.klp.org.in/listFiles/2" title="">Data</a>
-            <ul>
-              <li><a href="http://status.klp.org.in" target="_blank" title=""><span></span>Status</a></li>
-              <li><a href="http://www.klp.org.in/listFiles/2" target="_blank" title=""><span></span>Raw Data</a></li>
-              <li><a href="http://github.com/klpdotorg" target="_blank" title=""><span></span>Code</a></li>
-            </ul>
-          </li>
-          <li class="reports">
-            <a href="http://www.klp.org.in/text/reports" title="">Reports</a>
-            <ul>
-              <li><a href="http://dise.klp.org.in" target="_blank" title=""><span></span>DISE</a></li>
-              <li><a href="http://reports.klp.org.in" target="_blank" title=""><span></span>KLP Reports</a></li>
-              <li><a href="http://sslc.klp.org.in" target="_blank" title=""><span></span>SSLC</a></li>
-	      <li><a href="http://ivrs.klp.org.in" title=""><span></span>IVRS</a></li>
-              <li><a href="http://www.klp.org.in/text/reports" title=""><span></span>Other Reports</a></li>
-            </ul>
-          </li>
-          <li class="about">
-            <a href="http://www.klp.org.in/text/aboutus" title="">About</a>
-            <ul>
-              <li><a href="http://www.klp.org.in/text/aboutus" title=""><span></span>About</a></li>
-              <li><a href="http://www.klp.org.in/text/partners" title=""><span></span>Partners</a></li>
-              <li><a href="http://www.klp.org.in/text/disclaimer" title=""><span></span>Disclaimer</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <div class="clr"></div>
-    </div>
-  </header>
+    
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-   
-<body class="yui-skin-sam" onload="initialise($statusinfo)">
+        ga('create', 'UA-3982320-11', 'auto');
+        ga('send', 'pageview');
 
-<!-- header -->
+      </script>
+    
 
+  	<!--[if lt IE 9]>
+  	<script src="/static/js/lib/html5shiv.js"></script>
+  	<![endif]-->
 
-  <div class="page-status">
+  	
+
+    
+    
+  </head>
+
+  <body onload="initialise($statusinfo)">
+    <noscript>
+      <span class="alert error">
+        Sorry, you need Javascript for this site to work. Please enable Javascript in your browser settings or turn off any plugins that maybe blocking Javascript and reload this page. Thank you.
+      </span>
+    </noscript>
+
+  	<header class="main-header">
+  		<div class="header-content">
+  			<a href="https://klp.org.in/" class="logo"><img src="https://klp.org.in/static/images/KLP_logo@2x.png" alt="logo-klp" width="52"></a>
+  			<div class="nav-trigger js-nav-trigger"><span class="fa fa-bars"></span></div>
+  			<div class="nav-wrap">
+          <nav class="top-nav" role="navigation">
+            <ul class="js-dropdown nav">
+  <li class="brand-orange">
+    <a href="https://klp.org.in/map/">School Map</a>
+  <li class="brand-green">
+    <a href="#">Programmes</a>
+    <ul>
+      <li><a href="https://klp.org.in/partners/akshara/reading/">Akshara</a></li>
+      <li><a href="https://klp.org.in/partners/sikshana/reading/">Sikshana</a></li>
+      <li><a href="https://klp.org.in/partners/pratham/learn-out-of-the-box/">Pratham</a></li>
+    </ul>
+  <li class="brand-blue">
+    <a href="https://klp.org.in/volunteer/">Volunteer</a>
+  <li class="brand-turquoise">
+    <a href="#">Data</a>
+    <ul>
+      <!--li><a href="http://status.klp.org.in" target="_blank">Status</a></li-->
+      <li><a href="https://klp.org.in/status/" target="_blank">Status</a></li>
+      <li><a href="https://klp.org.in/data/">Data</a></li>
+      <li><a href="https://klp.org.in/api/docs/#!/v1/">API</a></li>
+      <li><a href="http://github.com/klpdotorg" target="_blank">Code</a></li>
+    </ul>
+  <li class="brand-purple">
+    <a href="#">Reports</a>
+    <ul>
+      <li><a href="https://klp.org.in/stories/">Field Stories</a></li>
+      <li><a href="https://klp.org.in/gka" target="_blank">GKA SMS</a></li>
+      <li><a href="http://dise.klp.org.in" target="_blank">DISE</a></li>
+      <li><a href="http://klp.org.in/reports/search" target="_blank">KLP Reports</a></li>
+      <li><a href="http://sslc.klp.org.in" target="_blank">SSLC</a></li> 
+      <li><a href="https://klp.org.in/sdmc" target="_blank">SDMC Reports</a></li>
+      <li><a href="https://klp.org.in/reports/">Other Reports</a></li>
+    </ul>
+  <li class="brand-red">
+    <a href="#">About</a>
+    <ul>
+      <li><a href="https://klp.org.in/about/">About</a></li>
+      <li><a href="https://klp.org.in/partners/">Partners</a></li>
+      <li><a href="https://klp.org.in/disclaimer/">Disclaimer</a></li>
+    </ul>
+</ul>
+          </nav>
+          <ul class="profile-login-block" id="preloginContainer" style="display:none;">
+  <li><div class="profile-options js-login-trigger" id="authUsername" data-state="anonymous"><span class="fa fa-login"></span>Login</div></li>
+</ul>
+
+<ul class="dropdown-base js-dropdown profile-login-block" id="postloginContainer" style="display:none;">
+
+  <li>
+    <div id="signupModalTrigger" style="display:none"></div>
+    <span class="fa fa-user"></span>
+    <ul>
+      <li>
+        <a href="#" id="userProfileBtn">
+          <span class="fa fa-user icon-left"></span>Profile
+        </a>
+      </li>
+      <li>
+        <a href="#" id="userEditProfileBtn">
+          <span class="fa fa-edit icon-left"></span>Edit Profile
+        </a>
+      </li>
+      <li>
+        <a href="#" id="logoutUser">
+          <span class="fa fa-sign-out icon-left"></span>Logout
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>
+        </div>
+  		</div>
+
+  	</header>
+
+<main class="main">
+
+<div class="page-status">
     <div class="container">
       <h1 class="bordered turquoise">Status</h1>
 
@@ -91,78 +143,92 @@ $def with (statusinfo)
       </p>      
     </div>
     <section>
-      <div class="page-section-heading-with-menu">
-        <div class="container">
-          <div class="heading"><h2>Select a data type</h2></div>
-        </div>
-
-        <div class="sub-sections-list">
-          <ul>
-            <li id="preschool" class="active">
-              <a href="" onClick="loadData('preschool');return false;" title="">Pre-School</a>
-            </li>
-            <li id="school" >
-              <a href="" onClick="loadData('school');return false;" title="">School</a>
-            </li>
-            <li id="sslc">
-              <a href="" onClick="loadData('sslc');return false;" title="">SSLC</a>
-            </li>
-            <li id="programmes">
-              <a href="" onClick="loadData('programmes');return false;" title="">Current Programmes</a>
-            </li>
-          </ul>
-        </div>
-        <div class="options-wrapper" id="select_panel">
-          <div class="option_item" id="district"> District
-            <select id="district_select" onChange="loadDistrictData()"></select>
-          </div>
-          <div class="option_item" id="block"> Project
-            <select id="block_select" onChange="loadBlockData()"></select>
-          </div>
-          <div class="option_item" id="cluster"> Circle
-            <select id="cluster_select" onChange="loadClusterData()"></select>
-          </div>
-        </div>
-        <div class="options-wrapper" id="select_panel">
-          <div class="option_item" id="school_sel"> Preschool
-            <select id="school_select" onChange="loadSchoolData()"></select>
-          </div>
-          <div class="option_item" id="class_sel"> Class
-            <select id="class_select" onChange="loadClassData()"></select>
-          </div>
-      </div>
-    </section>
-
-
+		<div class="page-section-heading-with-menu">
+			<div class="container">
+				<div class="heading"><h2>Select a data type</h2></div>
+			</div>
+			<div class="sub-sections-list">
+				<ul>
+					<li id="preschool" class="active">
+						<a href="" onClick="loadData('preschool');return false;" title="">Pre-School</a>
+					</li>
+					<li id="school" >
+						<a href="" onClick="loadData('school');return false;" title="">School</a>
+					</li>
+					<!-- <li id="sslc"><a href="" onClick="loadData('sslc');return false;" title="">SSLC</a></li> -->
+					<li id="programmes">
+						<a href="" onClick="loadData('programmes');return false;" title="">Current Programmes</a>
+					</li>
+				</ul>
+        	</div>
+        	<div class="options-wrapper select-tags " id="select_panel">
+				<div class="option_item " id="district"> District
+					<select id="district_select" onChange="loadDistrictData()">
+						<option>hello</option>
+						<option>hello</option>
+					</select>
+				</div>
+				<div class="option_item" id="block"> Project
+					<select id="block_select" onChange="loadBlockData()"></select>
+				</div>
+				<div class="option_item" id="cluster"> Circle
+					<select id="cluster_select" onChange="loadClusterData()"></select>
+				</div>
+			</div>
+			<div class="options-wrapper" id="select_panel">
+				<div class="option_item" id="school_sel"> Preschool
+					<select id="school_select" onChange="loadSchoolData()"></select>
+				</div>
+			<div class="option_item" id="class_sel"> Class
+				<select id="class_select" onChange="loadClassData()"></select>
+			</div>
+		</div>
+	</section>
 <section class="ie-z-index-fix">
 
       <div class="container">
         <div id="load_data"></div>
       </div>
-</section> <!-- /container -->
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="css/jquery.js"></script>
-    <script src="css/bootstrap-transition.js"></script>
-    <script src="css/bootstrap-alert.js"></script>
-    <script src="css/bootstrap-modal.js"></script>
-    <script src="css/bootstrap-dropdown.js"></script>
-    <script src="css/bootstrap-scrollspy.js"></script>
-    <script src="css/bootstrap-tab.js"></script>
-    <script src="css/bootstrap-tooltip.js"></script>
-    <script src="css/bootstrap-popover.js"></script>
-    <script src="css/bootstrap-button.js"></script>
-    <script src="css/bootstrap-collapse.js"></script>
-    <script src="css/bootstrap-carousel.js"></script>
-    <script src="css/bootstrap-typeahead.js"></script>
+</section>
 
-  
 <div class="footer">
    <div id="lastupdated" class="container"></div>
 </div>
-  <div class="container">   
-<center><h5>&copy; 2012 Karnataka Learning Partnership</h5></center></div>
+
 </div>
 
-</body></html>
+
+      <footer class="main-footer">
+        <div class="container">
+          <div class="footer-wrapper">
+            <nav class="nav-footer">
+              <ul>
+                <li class="nav-footer-menu-links"><a href="https://klp.org.in/about/">About</a></li>
+                <li class="nav-footer-menu-links"><a href="mailto:team@klp.org.in">Contact</a></li>
+              </ul>
+
+              <ul>
+                <li><a href="http://www.facebook.com/klpdotorg" target="_blank" class="tooltip" aria-label="Facebook"><span class="fa fa-facebook k-icon"></span></a></li>
+                <li><a href="https://twitter.com/KLPsays" target="_blank" class="tooltip" aria-label="Twitter"><span class="fa fa-twitter k-icon"></span></a></li>
+                <li><a href="http://blog.klp.org.in/feeds/posts/default" target="_blank" class="tooltip" aria-label="RSS"><span class="fa fa-rss k-icon"></span></a></li>
+                <li><a href="http://www.youtube.com/user/klpdotorg" target="_blank" class="tooltip" aria-label="YouTube"><span class="fa fa-youtube k-icon"></span></a></li>
+                <li><a href="https://klp.org.in/map" class="tooltip" aria-label="School Map"><span class="fa fa-map-marker k-icon"></span></a></li>
+                <!--li class="hidden-phone hidden-tablet"><a href="" title="">Programmes</a></li>
+                <li class="hidden-phone hidden-tablet"><a href="" title="">Databases</a></li>
+                <li class="hidden-phone hidden-tablet"><a href="" title="">Reports</a></li-->
+              </ul>
+            </nav>
+            <div class="footer-copyright">
+              <img src="https://klp.org.in/static/images/KLP_logo_footer@2x.png" alt="logo-klp" width="55">
+              <div class="copyright">Copyright 2015. All Rights Reserved.</div>
+            </div>
+          </div> <!-- /footer-wrapper -->
+        </div> <!-- /container -->
+      </footer>
+      
+  </main>
+    
+    
+
+  </body>
+</html>

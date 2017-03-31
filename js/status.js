@@ -134,7 +134,7 @@ function showAllBasicData(presch,sch,sslc){
 	var content = '<div class="table_header">Counts</div><table class="break_in_mobile">'
 	content = content + buildBasicContent('preschool',presch);
 	content = content + buildBasicContent('school',sch);
-	content = content + buildBasicContent('sslc',sslc);
+	//content = content + buildBasicContent('sslc',sslc);
 	content = content + '</table>'
 	document.getElementById("load_data").innerHTML=content;
 } 
@@ -296,10 +296,14 @@ function manageTab(tab)
     document.getElementById("class_sel").style.visibility='hidden';
   } else if (tab == "programmes") {
     document.getElementById("select_panel").style.visibility='hidden';
+  document.getElementById("block").style.visibility='hidden';
+  document.getElementById("cluster").style.visibility='hidden';
+  document.getElementById("school_sel").style.visibility='hidden';
+  document.getElementById("class_sel").style.visibility='hidden';
   }
 }
 
-function changeLabels (tab) {
+function changeLabels(tab) {
   if(tab == "preschool"){
     var block = document.getElementById("block").innerHTML 
     document.getElementById("block").innerHTML = block.replace("Block","Project");
@@ -319,11 +323,10 @@ function changeLabels (tab) {
 
 function activateTab(tab)
 {
-  var tabs = ["preschool","school","sslc","programmes"]
-  for (var each in tabs) {
-    if (tabs[each] != tab)
-      document.getElementById(tabs[each]).classList.remove('active');
-  }
+  var tabs = ["preschool","school","sslc","programmes"];
+      document.getElementById("preschool").classList.remove("active");
+      document.getElementById("school").classList.remove("active");
+      document.getElementById("programmes").classList.remove("active");
   document.getElementById(tab).classList.add('active')
 }
 
